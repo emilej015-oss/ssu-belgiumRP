@@ -1,5 +1,5 @@
 "use strict";
-// This file exports all the payloads available in the recommended API version
+// This file exports all the types available in the recommended API version
 // Thereby, things MAY break in the future. Try sticking to imports from a specific version
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;

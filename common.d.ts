@@ -1,344 +1,272 @@
-import type { Locale } from '../rest/common';
 /**
- * @see {@link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags}
- *
- * These flags are exported as `BigInt`s and NOT numbers. Wrapping them in `Number()`
- * may cause issues, try to use BigInts as much as possible or modules that can
- * replicate them in some way
+ * @see {@link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes}
  */
-export declare const PermissionFlagsBits: {
-    /**
-     * Allows creation of instant invites
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly CreateInstantInvite: bigint;
-    /**
-     * Allows kicking members
-     */
-    readonly KickMembers: bigint;
-    /**
-     * Allows banning members
-     */
-    readonly BanMembers: bigint;
-    /**
-     * Allows all permissions and bypasses channel permission overwrites
-     */
-    readonly Administrator: bigint;
-    /**
-     * Allows management and editing of channels
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly ManageChannels: bigint;
-    /**
-     * Allows management and editing of the guild
-     */
-    readonly ManageGuild: bigint;
-    /**
-     * Allows for the addition of reactions to messages
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly AddReactions: bigint;
-    /**
-     * Allows for viewing of audit logs
-     */
-    readonly ViewAuditLog: bigint;
-    /**
-     * Allows for using priority speaker in a voice channel
-     *
-     * Applies to channel types: Voice
-     */
-    readonly PrioritySpeaker: bigint;
-    /**
-     * Allows the user to go live
-     *
-     * Applies to channel types: Voice, Stage
-     */
-    readonly Stream: bigint;
-    /**
-     * Allows guild members to view a channel, which includes reading messages in text channels and joining voice channels
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly ViewChannel: bigint;
-    /**
-     * Allows for sending messages in a channel and creating threads in a forum
-     * (does not allow sending messages in threads)
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly SendMessages: bigint;
-    /**
-     * Allows for sending of `/tts` messages
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly SendTTSMessages: bigint;
-    /**
-     * Allows for deletion of other users messages
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly ManageMessages: bigint;
-    /**
-     * Links sent by users with this permission will be auto-embedded
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly EmbedLinks: bigint;
-    /**
-     * Allows for uploading images and files
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly AttachFiles: bigint;
-    /**
-     * Allows for reading of message history
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly ReadMessageHistory: bigint;
-    /**
-     * Allows for using the `@everyone` tag to notify all users in a channel,
-     * and the `@here` tag to notify all online users in a channel
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly MentionEveryone: bigint;
-    /**
-     * Allows the usage of custom emojis from other servers
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly UseExternalEmojis: bigint;
-    /**
-     * Allows for viewing guild insights
-     */
-    readonly ViewGuildInsights: bigint;
-    /**
-     * Allows for joining of a voice channel
-     *
-     * Applies to channel types: Voice, Stage
-     */
-    readonly Connect: bigint;
-    /**
-     * Allows for speaking in a voice channel
-     *
-     * Applies to channel types: Voice
-     */
-    readonly Speak: bigint;
-    /**
-     * Allows for muting members in a voice channel
-     *
-     * Applies to channel types: Voice, Stage
-     */
-    readonly MuteMembers: bigint;
-    /**
-     * Allows for deafening of members in a voice channel
-     *
-     * Applies to channel types: Voice
-     */
-    readonly DeafenMembers: bigint;
-    /**
-     * Allows for moving of members between voice channels
-     *
-     * Applies to channel types: Voice, Stage
-     */
-    readonly MoveMembers: bigint;
-    /**
-     * Allows for using voice-activity-detection in a voice channel
-     *
-     * Applies to channel types: Voice
-     */
-    readonly UseVAD: bigint;
-    /**
-     * Allows for modification of own nickname
-     */
-    readonly ChangeNickname: bigint;
-    /**
-     * Allows for modification of other users nicknames
-     */
-    readonly ManageNicknames: bigint;
-    /**
-     * Allows management and editing of roles
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly ManageRoles: bigint;
-    /**
-     * Allows management and editing of webhooks
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly ManageWebhooks: bigint;
-    /**
-     * Allows management and editing of emojis, stickers, and soundboard sounds
-     *
-     * @deprecated This is the old name for {@link PermissionFlagsBits.ManageGuildExpressions}
-     */
-    readonly ManageEmojisAndStickers: bigint;
-    /**
-     * Allows for editing and deleting emojis, stickers, and soundboard sounds created by all users
-     */
-    readonly ManageGuildExpressions: bigint;
-    /**
-     * Allows members to use application commands, including slash commands and context menu commands
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly UseApplicationCommands: bigint;
-    /**
-     * Allows for requesting to speak in stage channels
-     *
-     * Applies to channel types: Stage
-     */
-    readonly RequestToSpeak: bigint;
-    /**
-     * Allows for editing and deleting scheduled events created by all users
-     *
-     * Applies to channel types: Voice, Stage
-     */
-    readonly ManageEvents: bigint;
-    /**
-     * Allows for deleting and archiving threads, and viewing all private threads
-     *
-     * Applies to channel types: Text
-     */
-    readonly ManageThreads: bigint;
-    /**
-     * Allows for creating public and announcement threads
-     *
-     * Applies to channel types: Text
-     */
-    readonly CreatePublicThreads: bigint;
-    /**
-     * Allows for creating private threads
-     *
-     * Applies to channel types: Text
-     */
-    readonly CreatePrivateThreads: bigint;
-    /**
-     * Allows the usage of custom stickers from other servers
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly UseExternalStickers: bigint;
-    /**
-     * Allows for sending messages in threads
-     *
-     * Applies to channel types: Text
-     */
-    readonly SendMessagesInThreads: bigint;
-    /**
-     * Allows for using Activities (applications with the {@link ApplicationFlags.Embedded} flag) in a voice channel
-     *
-     * Applies to channel types: Voice
-     */
-    readonly UseEmbeddedActivities: bigint;
-    /**
-     * Allows for timing out users to prevent them from sending or reacting to messages in chat and threads,
-     * and from speaking in voice and stage channels
-     */
-    readonly ModerateMembers: bigint;
-    /**
-     * Allows for viewing role subscription insights
-     */
-    readonly ViewCreatorMonetizationAnalytics: bigint;
-    /**
-     * Allows for using soundboard in a voice channel
-     *
-     * Applies to channel types: Voice
-     */
-    readonly UseSoundboard: bigint;
-    /**
-     * Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those created by the current user
-     */
-    readonly CreateGuildExpressions: bigint;
-    /**
-     * Allows for creating scheduled events, and editing and deleting those created by the current user
-     *
-     * Applies to channel types: Voice, Stage
-     */
-    readonly CreateEvents: bigint;
-    /**
-     * Allows the usage of custom soundboard sounds from other servers
-     *
-     * Applies to channel types: Voice
-     */
-    readonly UseExternalSounds: bigint;
-    /**
-     * Allows sending voice messages
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly SendVoiceMessages: bigint;
-    /**
-     * Allows sending polls
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly SendPolls: bigint;
-    /**
-     * Allows user-installed apps to send public responses. When disabled, users will still be allowed to use their apps but the responses will be ephemeral. This only applies to apps not also installed to the server
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly UseExternalApps: bigint;
-    /**
-     * Allows pinning and unpinning messages
-     *
-     * Applies to channel types: Text
-     */
-    readonly PinMessages: bigint;
-    /**
-     * Allows bypassing slowmode restrictions
-     *
-     * Applies to channel types: Text, Voice, Stage
-     */
-    readonly BypassSlowmode: bigint;
-};
-export type LocalizationMap = Partial<Record<Locale, string | null>>;
+export declare enum RESTJSONErrorCodes {
+    GeneralError = 0,
+    UnknownAccount = 10001,
+    UnknownApplication = 10002,
+    UnknownChannel = 10003,
+    UnknownGuild = 10004,
+    UnknownIntegration = 10005,
+    UnknownInvite = 10006,
+    UnknownMember = 10007,
+    UnknownMessage = 10008,
+    UnknownPermissionOverwrite = 10009,
+    UnknownProvider = 10010,
+    UnknownRole = 10011,
+    UnknownToken = 10012,
+    UnknownUser = 10013,
+    UnknownEmoji = 10014,
+    UnknownWebhook = 10015,
+    UnknownWebhookService = 10016,
+    UnknownSession = 10020,
+    UnknownAsset = 10021,
+    UnknownBan = 10026,
+    UnknownSKU = 10027,
+    UnknownStoreListing = 10028,
+    UnknownEntitlement = 10029,
+    UnknownBuild = 10030,
+    UnknownLobby = 10031,
+    UnknownBranch = 10032,
+    UnknownStoreDirectoryLayout = 10033,
+    UnknownRedistributable = 10036,
+    UnknownGiftCode = 10038,
+    UnknownStream = 10049,
+    UnknownPremiumServerSubscribeCooldown = 10050,
+    UnknownGuildTemplate = 10057,
+    UnknownDiscoverableServerCategory = 10059,
+    UnknownSticker = 10060,
+    UnknownStickerPack = 10061,
+    UnknownInteraction = 10062,
+    UnknownApplicationCommand = 10063,
+    UnknownVoiceState = 10065,
+    UnknownApplicationCommandPermissions = 10066,
+    UnknownStageInstance = 10067,
+    UnknownGuildMemberVerificationForm = 10068,
+    UnknownGuildWelcomeScreen = 10069,
+    UnknownGuildScheduledEvent = 10070,
+    UnknownGuildScheduledEventUser = 10071,
+    UnknownTag = 10087,
+    UnknownSound = 10097,
+    BotsCannotUseThisEndpoint = 20001,
+    OnlyBotsCanUseThisEndpoint = 20002,
+    ExplicitContentCannotBeSentToTheDesiredRecipient = 20009,
+    NotAuthorizedToPerformThisActionOnThisApplication = 20012,
+    ActionCannotBePerformedDueToSlowmodeRateLimit = 20016,
+    TheMazeIsntMeantForYou = 20017,
+    OnlyTheOwnerOfThisAccountCanPerformThisAction = 20018,
+    AnnouncementEditLimitExceeded = 20022,
+    UnderMinimumAge = 20024,
+    ChannelSendRateLimit = 20028,
+    ServerSendRateLimit = 20029,
+    StageTopicServerNameServerDescriptionOrChannelNamesContainDisallowedWords = 20031,
+    GuildPremiumSubscriptionLevelTooLow = 20035,
+    MaximumNumberOfGuildsReached = 30001,
+    MaximumNumberOfFriendsReached = 30002,
+    MaximumNumberOfPinsReachedForTheChannel = 30003,
+    MaximumNumberOfRecipientsReached = 30004,
+    MaximumNumberOfGuildRolesReached = 30005,
+    MaximumNumberOfWebhooksReached = 30007,
+    MaximumNumberOfEmojisReached = 30008,
+    MaximumNumberOfReactionsReached = 30010,
+    MaximumNumberOfGroupDMsReached = 30011,
+    MaximumNumberOfGuildChannelsReached = 30013,
+    MaximumNumberOfAttachmentsInAMessageReached = 30015,
+    MaximumNumberOfInvitesReached = 30016,
+    MaximumNumberOfAnimatedEmojisReached = 30018,
+    MaximumNumberOfServerMembersReached = 30019,
+    MaximumNumberOfServerCategoriesReached = 30030,
+    GuildAlreadyHasTemplate = 30031,
+    MaximumNumberOfApplicationCommandsReached = 30032,
+    MaximumThreadParticipantsReached = 30033,
+    MaximumDailyApplicationCommandCreatesReached = 30034,
+    MaximumNumberOfNonGuildMemberBansHasBeenExceeded = 30035,
+    MaximumNumberOfBanFetchesHasBeenReached = 30037,
+    MaximumNumberOfUncompletedGuildScheduledEventsReached = 30038,
+    MaximumNumberOfStickersReached = 30039,
+    MaximumNumberOfPruneRequestsHasBeenReached = 30040,
+    MaximumNumberOfGuildWidgetSettingsUpdatesHasBeenReached = 30042,
+    MaximumNumberOfSoundboardSoundsReached = 30045,
+    MaximumNumberOfEditsToMessagesOlderThanOneHourReached = 30046,
+    MaximumNumberOfPinnedThreadsInForumHasBeenReached = 30047,
+    MaximumNumberOfTagsInForumHasBeenReached = 30048,
+    BitrateIsTooHighForChannelOfThisType = 30052,
+    MaximumNumberOfPremiumEmojisReached = 30056,
+    MaximumNumberOfWebhooksPerGuildReached = 30058,
+    MaximumNumberOfChannelPermissionOverwritesReached = 30060,
+    TheChannelsForThisGuildAreTooLarge = 30061,
+    Unauthorized = 40001,
+    VerifyYourAccount = 40002,
+    OpeningDirectMessagesTooFast = 40003,
+    SendMessagesHasBeenTemporarilyDisabled = 40004,
+    RequestEntityTooLarge = 40005,
+    FeatureTemporarilyDisabledServerSide = 40006,
+    UserBannedFromThisGuild = 40007,
+    ConnectionHasBeenRevoked = 40012,
+    OnlyConsumableSKUsCanBeConsumed = 40018,
+    YouCanOnlyDeleteSandboxEntitlements = 40019,
+    TargetUserIsNotConnectedToVoice = 40032,
+    ThisMessageWasAlreadyCrossposted = 40033,
+    ApplicationCommandWithThatNameAlreadyExists = 40041,
+    ApplicationInteractionFailedToSend = 40043,
+    CannotSendAMessageInAForumChannel = 40058,
+    InteractionHasAlreadyBeenAcknowledged = 40060,
+    TagNamesMustBeUnique = 40061,
+    ServiceResourceIsBeingRateLimited = 40062,
+    ThereAreNoTagsAvailableThatCanBeSetByNonModerators = 40066,
+    TagRequiredToCreateAForumPostInThisChannel = 40067,
+    AnEntitlementHasAlreadyBeenGrantedForThisResource = 40074,
+    ThisInteractionHasHitTheMaximumNumberOfFollowUpMessages = 40094,
+    CloudflareIsBlockingYourRequest = 40333,
+    MissingAccess = 50001,
+    InvalidAccountType = 50002,
+    CannotExecuteActionOnDMChannel = 50003,
+    GuildWidgetDisabled = 50004,
+    CannotEditMessageAuthoredByAnotherUser = 50005,
+    CannotSendAnEmptyMessage = 50006,
+    CannotSendMessagesToThisUser = 50007,
+    CannotSendMessagesInNonTextChannel = 50008,
+    ChannelVerificationLevelTooHighForYouToGainAccess = 50009,
+    OAuth2ApplicationDoesNotHaveBot = 50010,
+    OAuth2ApplicationLimitReached = 50011,
+    InvalidOAuth2State = 50012,
+    MissingPermissions = 50013,
+    InvalidToken = 50014,
+    NoteWasTooLong = 50015,
+    ProvidedTooFewOrTooManyMessagesToDelete = 50016,
+    InvalidMFALevel = 50017,
+    MessageCanOnlyBePinnedInTheChannelItWasSentIn = 50019,
+    InviteCodeInvalidOrTaken = 50020,
+    CannotExecuteActionOnSystemMessage = 50021,
+    CannotExecuteActionOnThisChannelType = 50024,
+    InvalidOAuth2AccessToken = 50025,
+    MissingRequiredOAuth2Scope = 50026,
+    InvalidWebhookToken = 50027,
+    InvalidRole = 50028,
+    InvalidRecipients = 50033,
+    OneOfTheMessagesProvidedWasTooOldForBulkDelete = 50034,
+    InvalidFormBodyOrContentType = 50035,
+    InviteAcceptedToGuildWithoutTheBotBeingIn = 50036,
+    InvalidActivityAction = 50039,
+    InvalidAPIVersion = 50041,
+    FileUploadedExceedsMaximumSize = 50045,
+    InvalidFileUploaded = 50046,
+    CannotSelfRedeemThisGift = 50054,
+    InvalidGuild = 50055,
+    InvalidSKU = 50057,
+    InvalidRequestOrigin = 50067,
+    InvalidMessageType = 50068,
+    PaymentSourceRequiredToRedeemGift = 50070,
+    CannotModifyASystemWebhook = 50073,
+    CannotDeleteChannelRequiredForCommunityGuilds = 50074,
+    CannotEditStickersWithinMessage = 50080,
+    InvalidStickerSent = 50081,
+    InvalidActionOnArchivedThread = 50083,
+    InvalidThreadNotificationSettings = 50084,
+    ParameterEarlierThanCreation = 50085,
+    CommunityServerChannelsMustBeTextChannels = 50086,
+    TheEntityTypeOfTheEventIsDifferentFromTheEntityYouAreTryingToStartTheEventFor = 50091,
+    ServerNotAvailableInYourLocation = 50095,
+    ServerNeedsMonetizationEnabledToPerformThisAction = 50097,
+    ServerNeedsMoreBoostsToPerformThisAction = 50101,
+    RequestBodyContainsInvalidJSON = 50109,
+    ProvidedFileIsInvalid = 50110,
+    ProvidedFileTypeIsInvalid = 50123,
+    ProvidedFileDurationExceedsMaximumLength = 50124,
+    OwnerCannotBePendingMember = 50131,
+    OwnershipCannotBeMovedToABotUser = 50132,
+    FailedToResizeAssetBelowTheMinimumSize = 50138,
+    CannotMixSubscriptionAndNonSubscriptionRolesForAnEmoji = 50144,
+    CannotConvertBetweenPremiumEmojiAndNormalEmoji = 50145,
+    UploadedFileNotFound = 50146,
+    SpecifiedEmojiIsInvalid = 50151,
+    VoiceMessagesDoNotSupportAdditionalContent = 50159,
+    VoiceMessagesMustHaveASingleAudioAttachment = 50160,
+    VoiceMessagesMustHaveSupportingMetadata = 50161,
+    VoiceMessagesCannotBeEdited = 50162,
+    CannotDeleteGuildSubscriptionIntegration = 50163,
+    YouCannotSendVoiceMessagesInThisChannel = 50173,
+    TheUserAccountMustFirstBeVerified = 50178,
+    ProvidedFileDoesNotHaveAValidDuration = 50192,
+    YouDoNotHavePermissionToSendThisSticker = 50600,
+    TwoFactorAuthenticationIsRequired = 60003,
+    NoUsersWithDiscordTagExist = 80004,
+    ReactionWasBlocked = 90001,
+    UserCannotUseBurstReactions = 90002,
+    ApplicationNotYetAvailable = 110001,
+    APIResourceOverloaded = 130000,
+    TheStageIsAlreadyOpen = 150006,
+    CannotReplyWithoutPermissionToReadMessageHistory = 160002,
+    ThreadAlreadyCreatedForMessage = 160004,
+    ThreadLocked = 160005,
+    MaximumActiveThreads = 160006,
+    MaximumActiveAnnouncementThreads = 160007,
+    InvalidJSONForUploadedLottieFile = 170001,
+    UploadedLottiesCannotContainRasterizedImages = 170002,
+    StickerMaximumFramerateExceeded = 170003,
+    StickerFrameCountExceedsMaximumOf1000Frames = 170004,
+    LottieAnimationMaximumDimensionsExceeded = 170005,
+    StickerFramerateIsTooSmallOrTooLarge = 170006,
+    StickerAnimationDurationExceedsMaximumOf5Seconds = 170007,
+    CannotUpdateAFinishedEvent = 180000,
+    FailedToCreateStageNeededForStageEvent = 180002,
+    MessageWasBlockedByAutomaticModeration = 200000,
+    TitleWasBlockedByAutomaticModeration = 200001,
+    WebhooksPostedToForumChannelsMustHaveAThreadNameOrThreadId = 220001,
+    WebhooksPostedToForumChannelsCannotHaveBothAThreadNameAndThreadId = 220002,
+    WebhooksCanOnlyCreateThreadsInForumChannels = 220003,
+    WebhookServicesCannotBeUsedInForumChannels = 220004,
+    MessageBlockedByHarmfulLinksFilter = 240000,
+    CannotEnableOnboardingRequirementsAreNotMet = 350000,
+    CannotUpdateOnboardingWhileBelowRequirements = 350001,
+    AccessToFileUploadsHasBeenLimitedForThisGuild = 400001,
+    FailedToBanUsers = 500000,
+    PollVotingBlocked = 520000,
+    PollExpired = 520001,
+    InvalidChannelTypeForPollCreation = 520002,
+    CannotEditAPollMessage = 520003,
+    CannotUseAnEmojiIncludedWithThePoll = 520004,
+    CannotExpireANonPollMessage = 520006
+}
 /**
- * @see {@link https://discord.com/developers/docs/topics/opcodes-and-status-codes#json}
+ * @see {@link https://discord.com/developers/docs/reference#locales}
  */
-export interface RESTError {
-    code: number;
-    message: string;
-    errors?: RESTErrorData;
+export declare enum Locale {
+    Indonesian = "id",
+    EnglishUS = "en-US",
+    EnglishGB = "en-GB",
+    Bulgarian = "bg",
+    ChineseCN = "zh-CN",
+    ChineseTW = "zh-TW",
+    Croatian = "hr",
+    Czech = "cs",
+    Danish = "da",
+    Dutch = "nl",
+    Finnish = "fi",
+    French = "fr",
+    German = "de",
+    Greek = "el",
+    Hindi = "hi",
+    Hungarian = "hu",
+    Italian = "it",
+    Japanese = "ja",
+    Korean = "ko",
+    Lithuanian = "lt",
+    Norwegian = "no",
+    Polish = "pl",
+    PortugueseBR = "pt-BR",
+    Romanian = "ro",
+    Russian = "ru",
+    SpanishES = "es-ES",
+    SpanishLATAM = "es-419",
+    Swedish = "sv-SE",
+    Thai = "th",
+    Turkish = "tr",
+    Ukrainian = "uk",
+    Vietnamese = "vi"
 }
-export interface RESTErrorFieldInformation {
-    code: string;
-    message: string;
-}
-export interface RESTErrorGroupWrapper {
-    _errors: RESTErrorData[];
-}
-export type RESTErrorData = RESTErrorFieldInformation | RESTErrorGroupWrapper | string | {
-    [k: string]: RESTErrorData;
-};
 /**
- * @see {@link https://discord.com/developers/docs/topics/rate-limits#exceeding-a-rate-limit-rate-limit-response-structure}
+ * @deprecated Use {@link Locale} instead.
  */
-export interface RESTRateLimit {
-    /**
-     * An error code for some limits
-     *
-     * {@link RESTJSONErrorCodes}
-     */
-    code?: number;
-    /**
-     * A value indicating if you are being globally rate limited or not
-     */
-    global: boolean;
-    /**
-     * A message saying you are being rate limited.
-     */
-    message: string;
-    /**
-     * The number of seconds to wait before submitting another request.
-     */
-    retry_after: number;
-}
+export type LocaleString = `${Locale}`;
 //# sourceMappingURL=common.d.ts.map
