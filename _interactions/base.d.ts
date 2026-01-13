@@ -1,5 +1,5 @@
 import type { Permissions, Snowflake } from '../../../globals';
-import type { APIRole, ApplicationIntegrationType, InteractionContextType, Locale } from '../../../v9';
+import type { APIRole, ApplicationIntegrationType, InteractionContextType, Locale } from '../../../v10';
 import type { APIChannel, APIPartialChannel, APIThreadChannel, ChannelType, ThreadChannelType } from '../channel';
 import type { APIBaseGuildMember, APIFlaggedGuildMember, APIGuildMember, APIGuildMemberAvatar, APIGuildMemberJoined, APIPartialInteractionGuild } from '../guild';
 import type { APIAttachment, APIMessage } from '../message';
@@ -10,9 +10,6 @@ import type { InteractionType } from './responses';
  * @see {@link https://discord.com/developers/docs/resources/channel#message-interaction-metadata-object}
  */
 export type APIMessageInteractionMetadata = APIApplicationCommandInteractionMetadata | APIMessageComponentInteractionMetadata | APIModalSubmitInteractionMetadata;
-/**
- * @see {@link https://discord.com/developers/docs/resources/channel#message-interaction-metadata-object}
- */
 export interface APIBaseInteractionMetadata<Type extends InteractionType> {
     /**
      * ID of the interaction

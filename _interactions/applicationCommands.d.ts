@@ -1,5 +1,5 @@
 import type { Permissions, Snowflake } from '../../../globals';
-import type { LocalizationMap } from '../../../v9';
+import type { LocalizationMap } from '../../../v10';
 import type { APIApplicationCommandOption, APIChatInputApplicationCommandDMInteraction, APIChatInputApplicationCommandGuildInteraction, APIChatInputApplicationCommandInteraction, APIChatInputApplicationCommandInteractionData } from './_applicationCommands/chatInput';
 import type { APIContextMenuDMInteraction, APIContextMenuGuildInteraction, APIContextMenuInteraction, APIContextMenuInteractionData } from './_applicationCommands/contextMenu';
 import type { APIPrimaryEntryPointCommandDMInteraction, APIPrimaryEntryPointCommandGuildInteraction, APIPrimaryEntryPointCommandInteraction, APIPrimaryEntryPointCommandInteractionData } from './_applicationCommands/entryPoint';
@@ -78,6 +78,8 @@ export interface APIApplicationCommand {
     default_permission?: boolean;
     /**
      * Indicates whether the command is age-restricted
+     *
+     * @defaultValue `false`
      */
     nsfw?: boolean;
     /**

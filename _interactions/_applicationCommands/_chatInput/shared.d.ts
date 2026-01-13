@@ -1,4 +1,4 @@
-import type { LocalizationMap } from '../../../../../v9';
+import type { LocalizationMap } from '../../../../../v10';
 /**
  * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type}
  */

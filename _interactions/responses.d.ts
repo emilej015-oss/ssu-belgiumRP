@@ -1,4 +1,4 @@
-import type { RESTPostAPIWebhookWithTokenJSONBody } from '../../../v9';
+import type { RESTPostAPIWebhookWithTokenJSONBody } from '../../../v10';
 import type { APIActionRowComponent, APIComponentInModalActionRow, APILabelComponent, APITextDisplayComponent } from '../message';
 import type { APIApplicationCommandOptionChoice } from './applicationCommands';
 /**
