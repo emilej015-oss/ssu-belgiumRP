@@ -1,11 +1,8 @@
-import type { RESTPostAPIWebhookWithTokenJSONBody } from '../../../v8';
-import type { APIActionRowComponent, APIModalActionRowComponent } from '../channel';
-import type { MessageFlags } from '../index';
+import type { RESTPostAPIWebhookWithTokenJSONBody } from '../../../v9';
+import type { APIActionRowComponent, APIComponentInModalActionRow, APILabelComponent, APITextDisplayComponent } from '../message';
 import type { APIApplicationCommandOptionChoice } from './applicationCommands';
 /**
- * https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type}
  */
 export declare enum InteractionType {
     Ping = 1,
@@ -15,62 +12,43 @@ export declare enum InteractionType {
     ModalSubmit = 5
 }
 /**
- * https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object}
  */
-export type APIInteractionResponse = APIApplicationCommandAutocompleteResponse | APIInteractionResponseChannelMessageWithSource | APIInteractionResponseDeferredChannelMessageWithSource | APIInteractionResponseDeferredMessageUpdate | APIInteractionResponsePong | APIInteractionResponseUpdateMessage | APIModalInteractionResponse;
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
+export type APIInteractionResponse = APIApplicationCommandAutocompleteResponse | APIInteractionResponseChannelMessageWithSource | APIInteractionResponseDeferredChannelMessageWithSource | APIInteractionResponseDeferredMessageUpdate | APIInteractionResponseLaunchActivity | APIInteractionResponsePong | APIInteractionResponseUpdateMessage | APIModalInteractionResponse | APIPremiumRequiredInteractionResponse;
 export interface APIInteractionResponsePong {
     type: InteractionResponseType.Pong;
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
 export interface APIApplicationCommandAutocompleteResponse {
     type: InteractionResponseType.ApplicationCommandAutocompleteResult;
     data: APICommandAutocompleteInteractionResponseCallbackData;
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
 export interface APIModalInteractionResponse {
     type: InteractionResponseType.Modal;
     data: APIModalInteractionResponseCallbackData;
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
+export interface APIPremiumRequiredInteractionResponse {
+    type: InteractionResponseType.PremiumRequired;
+}
 export interface APIInteractionResponseChannelMessageWithSource {
     type: InteractionResponseType.ChannelMessageWithSource;
     data: APIInteractionResponseCallbackData;
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
 export interface APIInteractionResponseDeferredChannelMessageWithSource {
     type: InteractionResponseType.DeferredChannelMessageWithSource;
     data?: Pick<APIInteractionResponseCallbackData, 'flags'>;
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
 export interface APIInteractionResponseDeferredMessageUpdate {
     type: InteractionResponseType.DeferredMessageUpdate;
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
 export interface APIInteractionResponseUpdateMessage {
     type: InteractionResponseType.UpdateMessage;
     data?: APIInteractionResponseCallbackData;
 }
+export interface APIInteractionResponseLaunchActivity {
+    type: InteractionResponseType.LaunchActivity;
+}
 /**
- * https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type}
  */
 export declare enum InteractionResponseType {
     /**
@@ -100,26 +78,32 @@ export declare enum InteractionResponseType {
     /**
      * Respond to an interaction with an modal for a user to fill-out
      */
-    Modal = 9
+    Modal = 9,
+    /**
+     * Respond to an interaction with an upgrade button, only available for apps with monetization enabled
+     *
+     * @deprecated Send a button with Premium type instead.
+     * {@link https://discord.com/developers/docs/change-log#premium-apps-new-premium-button-style-deep-linking-url-schemes | Learn more here}
+     */
+    PremiumRequired = 10,
+    /**
+     * Launch the Activity associated with the app.
+     *
+     * @remarks
+     * Only available for apps with Activities enabled
+     */
+    LaunchActivity = 12
 }
 /**
- * https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-data-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-data-structure}
  */
-export type APIInteractionResponseCallbackData = Omit<RESTPostAPIWebhookWithTokenJSONBody, 'avatar_url' | 'username'> & {
-    flags?: MessageFlags;
-};
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
+export type APIInteractionResponseCallbackData = Omit<RESTPostAPIWebhookWithTokenJSONBody, 'avatar_url' | 'username'>;
 export interface APICommandAutocompleteInteractionResponseCallbackData {
     choices?: APIApplicationCommandOptionChoice[];
 }
+export type APIModalInteractionResponseCallbackComponent = APIActionRowComponent<APIComponentInModalActionRow> | APILabelComponent | APITextDisplayComponent;
 /**
- * https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-modal
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-modal}
  */
 export interface APIModalInteractionResponseCallbackData {
     /**
@@ -132,7 +116,9 @@ export interface APIModalInteractionResponseCallbackData {
     title: string;
     /**
      * Between 1 and 5 (inclusive) components that make up the modal
+     *
+     * @remarks Using action rows inside modals is deprecated.
      */
-    components: APIActionRowComponent<APIModalActionRowComponent>[];
+    components: APIModalInteractionResponseCallbackComponent[];
 }
 //# sourceMappingURL=responses.d.ts.map

@@ -1,7 +1,6 @@
+import type { LocalizationMap } from '../../../../../v9';
 /**
- * https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type}
  */
 export declare enum ApplicationCommandOptionType {
     Subcommand = 1,
@@ -17,12 +16,11 @@ export declare enum ApplicationCommandOptionType {
     Attachment = 11
 }
 /**
- * https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure}
  */
 export interface APIApplicationCommandOptionChoice<ValueType = number | string> {
     name: string;
+    name_localizations?: LocalizationMap | null;
     value: ValueType;
 }
 //# sourceMappingURL=shared.d.ts.map

@@ -1,12 +1,10 @@
 import type { Snowflake } from '../../../../globals';
 /**
- * https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure}
  */
 export interface APIGuildApplicationCommandPermissions {
     /**
-     * The id of the command
+     * The id of the command or the application id if that permission applies to all commands
      */
     id: Snowflake;
     /**
@@ -23,17 +21,15 @@ export interface APIGuildApplicationCommandPermissions {
     permissions: APIApplicationCommandPermission[];
 }
 /**
- * https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure}
  */
 export interface APIApplicationCommandPermission {
     /**
-     * The id of the role or user
+     * The id of the role, user or channel. Can also be a permission constant
      */
     id: Snowflake;
     /**
-     * Role or user
+     * Role, user or channel
      */
     type: ApplicationCommandPermissionType;
     /**
@@ -42,12 +38,18 @@ export interface APIApplicationCommandPermission {
     permission: boolean;
 }
 /**
- * https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type}
  */
 export declare enum ApplicationCommandPermissionType {
     Role = 1,
-    User = 2
+    User = 2,
+    Channel = 3
 }
+/**
+ * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-constants}
+ */
+export declare const APIApplicationCommandPermissionsConstant: {
+    Everyone: (guildId: bigint | string) => Snowflake;
+    AllChannels: (guildId: bigint | string) => Snowflake;
+};
 //# sourceMappingURL=permissions.d.ts.map

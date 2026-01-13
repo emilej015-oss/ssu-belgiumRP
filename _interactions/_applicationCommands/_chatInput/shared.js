@@ -2,9 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ApplicationCommandOptionType = void 0;
 /**
- * https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type}
  */
 var ApplicationCommandOptionType;
 (function (ApplicationCommandOptionType) {

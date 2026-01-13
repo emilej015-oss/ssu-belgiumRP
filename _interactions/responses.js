@@ -2,9 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InteractionResponseType = exports.InteractionType = void 0;
 /**
- * https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type}
  */
 var InteractionType;
 (function (InteractionType) {
@@ -15,9 +13,7 @@ var InteractionType;
     InteractionType[InteractionType["ModalSubmit"] = 5] = "ModalSubmit";
 })(InteractionType || (exports.InteractionType = InteractionType = {}));
 /**
- * https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type}
  */
 var InteractionResponseType;
 (function (InteractionResponseType) {
@@ -49,5 +45,19 @@ var InteractionResponseType;
      * Respond to an interaction with an modal for a user to fill-out
      */
     InteractionResponseType[InteractionResponseType["Modal"] = 9] = "Modal";
+    /**
+     * Respond to an interaction with an upgrade button, only available for apps with monetization enabled
+     *
+     * @deprecated Send a button with Premium type instead.
+     * {@link https://discord.com/developers/docs/change-log#premium-apps-new-premium-button-style-deep-linking-url-schemes | Learn more here}
+     */
+    InteractionResponseType[InteractionResponseType["PremiumRequired"] = 10] = "PremiumRequired";
+    /**
+     * Launch the Activity associated with the app.
+     *
+     * @remarks
+     * Only available for apps with Activities enabled
+     */
+    InteractionResponseType[InteractionResponseType["LaunchActivity"] = 12] = "LaunchActivity";
 })(InteractionResponseType || (exports.InteractionResponseType = InteractionResponseType = {}));
 //# sourceMappingURL=responses.js.map
