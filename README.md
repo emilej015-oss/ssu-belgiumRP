@@ -1,144 +1,102 @@
-<div align="center">
-	<br />
-	<p>
-		<a href="https://discord.js.org"><img src="https://discord.js.org/static/logo.svg" width="546" alt="discord.js" /></a>
-	</p>
-	<br />
-	<p>
-		<a href="https://discord.gg/djs"><img src="https://img.shields.io/discord/222078108977594368?color=5865F2&logo=discord&logoColor=white" alt="Discord server" /></a>
-		<a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/npm/v/discord.js.svg?maxAge=3600" alt="npm version" /></a>
-		<a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/npm/dt/discord.js.svg?maxAge=3600" alt="npm downloads" /></a>
-		<a href="https://github.com/discordjs/discord.js/actions"><img src="https://github.com/discordjs/discord.js/actions/workflows/test.yml/badge.svg" alt="Tests status" /></a>
-		<a href="https://github.com/discordjs/discord.js/commits/main/packages/discord.js"><img alt="Last commit." src="https://img.shields.io/github/last-commit/discordjs/discord.js?logo=github&logoColor=ffffff&path=packages%2Fdiscord.js"></a>
-		<a href="https://codecov.io/gh/discordjs/discord.js"><img src="https://codecov.io/gh/discordjs/discord.js/branch/main/graph/badge.svg?precision=2" alt="Code coverage" /></a>
-	</p>
-	<p>
-		<a href="https://vercel.com/?utm_source=discordjs&utm_campaign=oss"><img src="https://raw.githubusercontent.com/discordjs/discord.js/main/.github/powered-by-vercel.svg" alt="Vercel" /></a>
-		<a href="https://www.cloudflare.com"><img src="https://raw.githubusercontent.com/discordjs/discord.js/main/.github/powered-by-workers.png" alt="Cloudflare Workers" height="44" /></a>
-	</p>
-</div>
+# Discord API Types
 
-## About
+[![discord-api-types](https://raw.githubusercontent.com/discordjs/discord-api-types/main/website/static/svgs/logo_long_blurple.svg)](https://github.com/discordjs/discord-api-types)
 
-discord.js is a powerful [Node.js](https://nodejs.org) module that allows you to easily interact with the
-[Discord API](https://discord.com/developers/docs/intro).
+[![GitHub](https://img.shields.io/github/license/discordjs/discord-api-types)](https://github.com/discordjs/discord-api-types/blob/main/LICENSE.md)
+[![npm](https://img.shields.io/npm/v/discord-api-types?color=crimson&logo=npm)](https://www.npmjs.com/package/discord-api-types)
+[![deno](https://img.shields.io/npm/v/discord-api-types?color=blue&label=deno&logo=deno)](https://deno.land/x/discord_api_types)
+[![Patreon Donate](https://img.shields.io/badge/patreon-donate-brightgreen.svg?label=Donate%20with%20Patreon&logo=patreon&colorB=F96854&link=https://www.patreon.com/vladfrangu)](https://www.patreon.com/vladfrangu)
+[![Ko-fi Donate](https://img.shields.io/badge/kofi-donate-brightgreen.svg?label=Donate%20with%20Ko-fi&logo=ko-fi&colorB=F16061&link=https://ko-fi.com/wolfgalvlad&logoColor=FFFFFF)](https://ko-fi.com/wolfgalvlad)
+[![GitHub Sponsors](https://img.shields.io/badge/patreon-donate-brightgreen.svg?label=Sponsor%20through%20GitHub&logo=github&colorB=F96854&link=https://github.com/sponsors/vladfrangu)](https://github.com/sponsors/vladfrangu)
+[![Powered by Vercel](https://raw.githubusercontent.com/discordjs/discord-api-types/main/website/static/powered-by-vercel.svg)](https://vercel.com?utm_source=discordjs&utm_campaign=oss)
 
-- Object-oriented
-- Predictable abstractions
-- Performant
-- 100% coverage of the Discord API
+Simple type definitions for the [Discord API](https://discord.com/developers/docs/intro).
 
 ## Installation
 
-**Node.js 18 or newer is required.**
+Install with [npm](https://www.npmjs.com/) / [yarn](https://yarnpkg.com) / [pnpm](https://pnpm.js.org/):
 
 ```sh
-npm install discord.js
-yarn add discord.js
-pnpm add discord.js
-bun add discord.js
+npm install discord-api-types
+yarn add discord-api-types
+pnpm add discord-api-types
 ```
 
-### Optional packages
+### Usage
 
-- [zlib-sync](https://www.npmjs.com/package/zlib-sync) for WebSocket data compression and inflation (`npm install zlib-sync`)
-- [bufferutil](https://www.npmjs.com/package/bufferutil) for a much faster WebSocket connection (`npm install bufferutil`)
-- [@discordjs/voice](https://www.npmjs.com/package/@discordjs/voice) for interacting with the Discord Voice API (`npm install @discordjs/voice`)
-
-## Example usage
-
-Install discord.js:
-
-```sh
-npm install discord.js
-yarn add discord.js
-pnpm add discord.js
-bun add discord.js
-```
-
-Register a slash command against the Discord API:
+You can only import this module by specifying the API version you want to target. Append `/v*` to the import path, where the `*` represents the API version. Below are some examples
 
 ```js
-import { REST, Routes } from 'discord.js';
-
-const commands = [
-  {
-    name: 'ping',
-    description: 'Replies with Pong!',
-  },
-];
-
-const rest = new REST({ version: '10' }).setToken(TOKEN);
-
-try {
-  console.log('Started refreshing application (/) commands.');
-
-  await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
-
-  console.log('Successfully reloaded application (/) commands.');
-} catch (error) {
-  console.error(error);
-}
+const { APIUser } = require('discord-api-types/v10');
 ```
 
-Afterwards we can create a quite simple example bot:
+```ts
+// TypeScript/ES Module support
+import { APIUser } from 'discord-api-types/v10';
+```
+
+You may also import just certain parts of the module that you need. The possible values are: `globals`, `gateway`, `gateway/v*`, `payloads`, `payloads/v*`, `rest`, `rest/v*`, `rpc`, `rpc/v*`, `utils`, `utils/v*`, `voice`, and `voice/v*`. Below are some examples
 
 ```js
-import { Client, GatewayIntentBits } from 'discord.js';
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
-
-client.on('interactionCreate', async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-
-  if (interaction.commandName === 'ping') {
-    await interaction.reply('Pong!');
-  }
-});
-
-client.login(TOKEN);
+const { GatewayVersion } = require('discord-api-types/gateway/v10');
 ```
 
-## Links
+```ts
+// TypeScript/ES Module support
+import { GatewayVersion } from 'discord-api-types/gateway/v10';
+```
 
-- [Website][website] ([source][website-source])
-- [Documentation][documentation]
-- [Guide][guide] ([source][guide-source])
-  Also see the v13 to v14 [Update Guide][guide-update], which includes updated and removed items from the library.
-- [discord.js Discord server][discord]
-- [Discord API Discord server][discord-api]
-- [GitHub][source]
-- [npm][npm]
-- [Related libraries][related-libs]
+> _**Note:** The `v*` exports (`discord-api-types/v*`) include the appropriate version of `gateway`, `payloads`, `rest`, `rpc`, and `utils` you specified, alongside the `globals` exports_
 
-### Extensions
+### Deno
 
-- [RPC][rpc] ([source][rpc-source])
+We also provide typings compatible with the [deno](https://deno.land/) runtime. You have 3 ways you can import them:
 
-## Contributing
+1. Directly from GitHub
 
-Before creating an issue, please ensure that it hasn't already been reported/suggested, and double-check the
-[documentation][documentation].  
-See [the contribution guide][contributing] if you'd like to submit a PR.
+```ts
+// Importing a specific API version
+import { APIUser } from 'https://raw.githubusercontent.com/discordjs/discord-api-types/main/deno/v10.ts';
+```
 
-## Help
+2. From [deno.land/x](https://deno.land/x)
 
-If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our official [discord.js Server][discord].
+```ts
+// Importing a specific API version
+import { APIUser } from 'https://deno.land/x/discord_api_types/v10.ts';
+```
 
-[website]: https://discord.js.org
-[website-source]: https://github.com/discordjs/discord.js/tree/main/apps/website
-[documentation]: https://discord.js.org/docs/packages/discord.js/stable
-[guide]: https://discordjs.guide/
-[guide-source]: https://github.com/discordjs/guide
-[guide-update]: https://discordjs.guide/additional-info/changes-in-v14.html
-[discord]: https://discord.gg/djs
-[discord-api]: https://discord.gg/discord-api
-[source]: https://github.com/discordjs/discord.js/tree/main/packages/discord.js
-[npm]: https://www.npmjs.com/package/discord.js
-[related-libs]: https://discord.com/developers/docs/topics/community-resources#libraries
-[rpc]: https://www.npmjs.com/package/discord-rpc
-[rpc-source]: https://github.com/discordjs/RPC
-[contributing]: https://github.com/discordjs/discord.js/blob/main/.github/CONTRIBUTING.md
+3. From [skypack.dev](https://www.skypack.dev/)
+
+```ts
+// Importing a specific API version
+import { APIUser } from 'https://cdn.skypack.dev/discord-api-types/v10?dts';
+```
+
+## Project Structure
+
+The exports of each API version is split into three main parts:
+
+- Everything exported with the `API` prefix represents a payload you may get from the REST API _or_ the Gateway.
+
+- Everything exported with the `Gateway` prefix represents data that ONLY comes from or is directly related to the Gateway.
+
+- Everything exported with the `REST` prefix represents data that ONLY comes from or is directly related to the REST API.
+    - For endpoint options, they will follow the following structure: `REST<HTTP Method><Type><Query|(JSON|FormData)Body|Result>` where the type represents what it will return.
+        - For example, `RESTPostAPIChannelMessageJSONBody` or `RESTGetAPIGatewayBotInfoResult`.
+
+        - Some exported types (specifically OAuth2 related ones) may not respect this entire structure due to the nature of the fields. They will start with either `RESTOAuth2` or with something similar to `REST<HTTP Method>OAuth2`
+
+    - If a type ends with `Result`, then it represents the expected result by calling its accompanying route.
+        - Types that are exported as `never` usually mean the result will be a `204 No Content`, so you can safely ignore it. This does **not** account for errors.
+
+- Anything else that is miscellaneous will be exported based on what it represents (for example the `REST` route object).
+
+- There may be types exported that are identical for all versions. These will be exported as is and can be found in the `globals` file. They will still be prefixed accordingly as described above.
+
+**A note about how types are documented**: This package will add types only for known and documented properties that are present in Discord's [API Documentation repository](https://github.com/discord/discord-api-docs),
+that are mentioned in an open pull request, or known through other means _and have received the green light to be used_.
+Anything else will not be documented (for example client only types).
+
+With that aside, we may allow certain types that are not documented in the [API Documentation repository](https://github.com/discord/discord-api-docs) on a case by case basis.
+They will be documented with an `@unstable` tag and are not subject with the same versioning rules.
