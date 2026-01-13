@@ -1,9 +1,7 @@
 import type { Snowflake } from '../../globals';
 import type { APIGuildMember } from './guild';
 /**
- * https://discord.com/developers/docs/resources/stage-instance#stage-instance-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/stage-instance#stage-instance-object}
  */
 export interface APIStageInstance {
     /**
@@ -25,22 +23,30 @@ export interface APIStageInstance {
     /**
      * The privacy level of the stage instance
      *
-     * See https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level
+     * @see {@link https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level}
      */
     privacy_level: StageInstancePrivacyLevel;
     /**
      * Whether or not stage discovery is disabled
+     *
+     * @deprecated
+     * {@link https://github.com/discord/discord-api-docs/pull/4296 | discord-api-docs#4296}
      */
     discoverable_disabled: boolean;
+    /**
+     * The id of the scheduled event for this stage instance
+     */
+    guild_scheduled_event_id?: Snowflake;
 }
 /**
- * https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level}
  */
 export declare enum StageInstancePrivacyLevel {
     /**
      * The stage instance is visible publicly, such as on stage discovery
+     *
+     * @deprecated
+     * {@link https://github.com/discord/discord-api-docs/pull/4296 | discord-api-docs#4296}
      */
     Public = 1,
     /**
@@ -49,9 +55,9 @@ export declare enum StageInstancePrivacyLevel {
     GuildOnly = 2
 }
 /**
- * https://discord.com/developers/docs/resources/invite#invite-stage-instance-object-invite-stage-instance-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/invite#invite-stage-instance-object-invite-stage-instance-structure}
+ * @deprecated
+ * {@link https://github.com/discord/discord-api-docs/pull/4479 | discord-api-docs#4479}
  */
 export interface APIInviteStageInstance {
     /**
@@ -69,7 +75,7 @@ export interface APIInviteStageInstance {
     /**
      * The members speaking in the stage
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure}
      */
     members: APIGuildMember[];
 }

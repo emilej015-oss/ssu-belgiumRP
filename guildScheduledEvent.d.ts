@@ -1,10 +1,7 @@
 import type { Snowflake } from '../../globals';
 import type { APIGuildMember } from './guild';
 import type { APIUser } from './user';
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
-interface APIGuildScheduledEventBase<Type extends GuildScheduledEventEntityType> {
+export interface APIGuildScheduledEventBase<Type extends GuildScheduledEventEntityType> {
     /**
      * The id of the guild event
      */
@@ -28,7 +25,7 @@ interface APIGuildScheduledEventBase<Type extends GuildScheduledEventEntityType>
     /**
      * The description of the scheduled event
      */
-    description?: string;
+    description?: string | null;
     /**
      * The time the scheduled event will start
      */
@@ -68,39 +65,132 @@ interface APIGuildScheduledEventBase<Type extends GuildScheduledEventEntityType>
     /**
      * The cover image of the scheduled event
      */
-    image: string | null;
+    image?: string | null;
+    /**
+     * The definition for how often this event should recur
+     */
+    recurrence_rule: APIGuildScheduledEventRecurrenceRule | null;
 }
 /**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-structure}
  */
+export interface APIGuildScheduledEventRecurrenceRule {
+    /**
+     * Starting time of the recurrence interval
+     */
+    start: string;
+    /**
+     * Ending time of the recurrence interval
+     */
+    end: string | null;
+    /**
+     * How often the event occurs
+     */
+    frequency: GuildScheduledEventRecurrenceRuleFrequency;
+    /**
+     * The spacing between the events, defined by `frequency`.
+     * For example, `frequency` of {@link GuildScheduledEventRecurrenceRuleFrequency.Weekly} and an `interval` of `2`
+     * would be "every-other week"
+     */
+    interval: number;
+    /**
+     * Set of specific days within a week for the event to recur on
+     */
+    by_weekday: GuildScheduledEventRecurrenceRuleWeekday[] | null;
+    /**
+     * List of specific days within a specific week (1-5) to recur on
+     */
+    by_n_weekday: APIGuildScheduledEventRecurrenceRuleNWeekday[] | null;
+    /**
+     * Set of specific months to recur on
+     */
+    by_month: GuildScheduledEventRecurrenceRuleMonth[] | null;
+    /**
+     * Set of specific dates within a month to recur on
+     */
+    by_month_day: number[] | null;
+    /**
+     * Set of days within a year to recur on (1-364)
+     */
+    by_year_day: number[] | null;
+    /**
+     * The total amount of times that the event is allowed to recur before stopping
+     */
+    count: number | null;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-frequency}
+ */
+export declare enum GuildScheduledEventRecurrenceRuleFrequency {
+    Yearly = 0,
+    Monthly = 1,
+    Weekly = 2,
+    Daily = 3
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-weekday}
+ */
+export declare enum GuildScheduledEventRecurrenceRuleWeekday {
+    Monday = 0,
+    Tuesday = 1,
+    Wednesday = 2,
+    Thursday = 3,
+    Friday = 4,
+    Saturday = 5,
+    Sunday = 6
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-month}
+ */
+export declare enum GuildScheduledEventRecurrenceRuleMonth {
+    January = 1,
+    February = 2,
+    March = 3,
+    April = 4,
+    May = 5,
+    June = 6,
+    July = 7,
+    August = 8,
+    September = 9,
+    October = 10,
+    November = 11,
+    December = 12
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-nweekday-structure}
+ */
+export interface APIGuildScheduledEventRecurrenceRuleNWeekday {
+    /**
+     * The week to reoccur on.
+     */
+    n: 1 | 2 | 3 | 4 | 5;
+    /**
+     * The day within the week to reoccur on
+     */
+    day: GuildScheduledEventRecurrenceRuleWeekday;
+}
+/**
+ * @deprecated Use {@link APIGuildScheduledEventRecurrenceRuleNWeekday} instead
+ */
+export type GuildScheduledEventRecurrenceRuleNWeekday = APIGuildScheduledEventRecurrenceRuleNWeekday;
 export interface APIStageInstanceGuildScheduledEvent extends APIGuildScheduledEventBase<GuildScheduledEventEntityType.StageInstance> {
     channel_id: Snowflake;
     entity_metadata: null;
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
 export interface APIVoiceGuildScheduledEvent extends APIGuildScheduledEventBase<GuildScheduledEventEntityType.Voice> {
     channel_id: Snowflake;
     entity_metadata: null;
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
 export interface APIExternalGuildScheduledEvent extends APIGuildScheduledEventBase<GuildScheduledEventEntityType.External> {
     channel_id: null;
     entity_metadata: Required<APIGuildScheduledEventEntityMetadata>;
 }
 /**
- * https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure}
  */
 export type APIGuildScheduledEvent = APIExternalGuildScheduledEvent | APIStageInstanceGuildScheduledEvent | APIVoiceGuildScheduledEvent;
 /**
- * https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-metadata
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-metadata}
  */
 export interface APIGuildScheduledEventEntityMetadata {
     /**
@@ -109,9 +199,7 @@ export interface APIGuildScheduledEventEntityMetadata {
     location?: string;
 }
 /**
- * https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-types
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-types}
  */
 export declare enum GuildScheduledEventEntityType {
     StageInstance = 1,
@@ -119,9 +207,7 @@ export declare enum GuildScheduledEventEntityType {
     External = 3
 }
 /**
- * https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-status
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-status}
  */
 export declare enum GuildScheduledEventStatus {
     Scheduled = 1,
@@ -130,9 +216,7 @@ export declare enum GuildScheduledEventStatus {
     Canceled = 4
 }
 /**
- * https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-privacy-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-privacy-level}
  */
 export declare enum GuildScheduledEventPrivacyLevel {
     /**
@@ -141,9 +225,7 @@ export declare enum GuildScheduledEventPrivacyLevel {
     GuildOnly = 2
 }
 /**
- * https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object-guild-scheduled-event-user-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object-guild-scheduled-event-user-structure}
  */
 export interface APIGuildScheduledEventUser {
     /**
@@ -159,5 +241,4 @@ export interface APIGuildScheduledEventUser {
      */
     member?: APIGuildMember;
 }
-export {};
 //# sourceMappingURL=guildScheduledEvent.d.ts.map

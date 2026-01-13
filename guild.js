@@ -3,11 +3,9 @@
  * Types extracted from https://discord.com/developers/docs/resources/guild
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MembershipScreeningFieldType = exports.GuildWidgetStyle = exports.IntegrationExpireBehavior = exports.GuildFeature = exports.GuildSystemChannelFlags = exports.GuildPremiumTier = exports.GuildVerificationLevel = exports.GuildNSFWLevel = exports.GuildMFALevel = exports.GuildExplicitContentFilter = exports.GuildDefaultMessageNotifications = void 0;
+exports.GuildOnboardingPromptType = exports.GuildOnboardingMode = exports.MembershipScreeningFieldType = exports.GuildWidgetStyle = exports.IntegrationExpireBehavior = exports.GuildMemberFlags = exports.GuildFeature = exports.GuildSystemChannelFlags = exports.GuildHubType = exports.GuildPremiumTier = exports.GuildVerificationLevel = exports.GuildNSFWLevel = exports.GuildMFALevel = exports.GuildExplicitContentFilter = exports.GuildDefaultMessageNotifications = void 0;
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
  */
 var GuildDefaultMessageNotifications;
 (function (GuildDefaultMessageNotifications) {
@@ -15,9 +13,7 @@ var GuildDefaultMessageNotifications;
     GuildDefaultMessageNotifications[GuildDefaultMessageNotifications["OnlyMentions"] = 1] = "OnlyMentions";
 })(GuildDefaultMessageNotifications || (exports.GuildDefaultMessageNotifications = GuildDefaultMessageNotifications = {}));
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
  */
 var GuildExplicitContentFilter;
 (function (GuildExplicitContentFilter) {
@@ -26,9 +22,7 @@ var GuildExplicitContentFilter;
     GuildExplicitContentFilter[GuildExplicitContentFilter["AllMembers"] = 2] = "AllMembers";
 })(GuildExplicitContentFilter || (exports.GuildExplicitContentFilter = GuildExplicitContentFilter = {}));
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-mfa-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
  */
 var GuildMFALevel;
 (function (GuildMFALevel) {
@@ -36,9 +30,7 @@ var GuildMFALevel;
     GuildMFALevel[GuildMFALevel["Elevated"] = 1] = "Elevated";
 })(GuildMFALevel || (exports.GuildMFALevel = GuildMFALevel = {}));
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
  */
 var GuildNSFWLevel;
 (function (GuildNSFWLevel) {
@@ -48,9 +40,7 @@ var GuildNSFWLevel;
     GuildNSFWLevel[GuildNSFWLevel["AgeRestricted"] = 3] = "AgeRestricted";
 })(GuildNSFWLevel || (exports.GuildNSFWLevel = GuildNSFWLevel = {}));
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-verification-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
  */
 var GuildVerificationLevel;
 (function (GuildVerificationLevel) {
@@ -76,9 +66,7 @@ var GuildVerificationLevel;
     GuildVerificationLevel[GuildVerificationLevel["VeryHigh"] = 4] = "VeryHigh";
 })(GuildVerificationLevel || (exports.GuildVerificationLevel = GuildVerificationLevel = {}));
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-premium-tier
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-premium-tier}
  */
 var GuildPremiumTier;
 (function (GuildPremiumTier) {
@@ -87,10 +75,14 @@ var GuildPremiumTier;
     GuildPremiumTier[GuildPremiumTier["Tier2"] = 2] = "Tier2";
     GuildPremiumTier[GuildPremiumTier["Tier3"] = 3] = "Tier3";
 })(GuildPremiumTier || (exports.GuildPremiumTier = GuildPremiumTier = {}));
+var GuildHubType;
+(function (GuildHubType) {
+    GuildHubType[GuildHubType["Default"] = 0] = "Default";
+    GuildHubType[GuildHubType["HighSchool"] = 1] = "HighSchool";
+    GuildHubType[GuildHubType["College"] = 2] = "College";
+})(GuildHubType || (exports.GuildHubType = GuildHubType = {}));
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
  */
 var GuildSystemChannelFlags;
 (function (GuildSystemChannelFlags) {
@@ -112,9 +104,7 @@ var GuildSystemChannelFlags;
     GuildSystemChannelFlags[GuildSystemChannelFlags["SuppressJoinNotificationReplies"] = 8] = "SuppressJoinNotificationReplies";
 })(GuildSystemChannelFlags || (exports.GuildSystemChannelFlags = GuildSystemChannelFlags = {}));
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-guild-features
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-features}
  */
 var GuildFeature;
 (function (GuildFeature) {
@@ -127,17 +117,35 @@ var GuildFeature;
      */
     GuildFeature["AnimatedIcon"] = "ANIMATED_ICON";
     /**
+     * Guild is using the old permissions configuration behavior
+     *
+     * @see {@link https://discord.com/developers/docs/change-log#upcoming-application-command-permission-changes}
+     */
+    GuildFeature["ApplicationCommandPermissionsV2"] = "APPLICATION_COMMAND_PERMISSIONS_V2";
+    /**
+     * Guild has set up auto moderation rules
+     */
+    GuildFeature["AutoModeration"] = "AUTO_MODERATION";
+    /**
      * Guild has access to set a guild banner image
      */
     GuildFeature["Banner"] = "BANNER";
     /**
-     * Guild has access to use commerce features (i.e. create store channels)
-     */
-    GuildFeature["Commerce"] = "COMMERCE";
-    /**
      * Guild can enable welcome screen, Membership Screening and discovery, and receives community updates
      */
     GuildFeature["Community"] = "COMMUNITY";
+    /**
+     * Guild has enabled monetization
+     */
+    GuildFeature["CreatorMonetizableProvisional"] = "CREATOR_MONETIZABLE_PROVISIONAL";
+    /**
+     * Guild has enabled the role subscription promo page
+     */
+    GuildFeature["CreatorStorePage"] = "CREATOR_STORE_PAGE";
+    /**
+     * Guild has been set as a support server on the App Directory
+     */
+    GuildFeature["DeveloperSupportServer"] = "DEVELOPER_SUPPORT_SERVER";
     /**
      * Guild is able to be discovered in the directory
      */
@@ -147,15 +155,43 @@ var GuildFeature;
      */
     GuildFeature["Featurable"] = "FEATURABLE";
     /**
+     * Guild is listed in a directory channel
+     */
+    GuildFeature["HasDirectoryEntry"] = "HAS_DIRECTORY_ENTRY";
+    /**
+     * Guild is a Student Hub
+     *
+     * @see {@link https://support.discord.com/hc/articles/4406046651927}
+     * @unstable This feature is currently not documented by Discord, but has known value
+     */
+    GuildFeature["Hub"] = "HUB";
+    /**
+     * Guild has disabled invite usage, preventing users from joining
+     */
+    GuildFeature["InvitesDisabled"] = "INVITES_DISABLED";
+    /**
      * Guild has access to set an invite splash background
      */
     GuildFeature["InviteSplash"] = "INVITE_SPLASH";
+    /**
+     * Guild is in a Student Hub
+     *
+     * @see {@link https://support.discord.com/hc/articles/4406046651927}
+     * @unstable This feature is currently not documented by Discord, but has known value
+     */
+    GuildFeature["LinkedToHub"] = "LINKED_TO_HUB";
     /**
      * Guild has enabled Membership Screening
      */
     GuildFeature["MemberVerificationGateEnabled"] = "MEMBER_VERIFICATION_GATE_ENABLED";
     /**
+     * Guild has increased custom soundboard sound slots
+     */
+    GuildFeature["MoreSoundboard"] = "MORE_SOUNDBOARD";
+    /**
      * Guild has enabled monetization
+     *
+     * @unstable This feature is no longer documented by Discord
      */
     GuildFeature["MonetizationEnabled"] = "MONETIZATION_ENABLED";
     /**
@@ -178,19 +214,27 @@ var GuildFeature;
      * Guild has access to create private threads
      */
     GuildFeature["PrivateThreads"] = "PRIVATE_THREADS";
+    /**
+     * Guild has disabled alerts for join raids in the configured safety alerts channel
+     */
+    GuildFeature["RaidAlertsDisabled"] = "RAID_ALERTS_DISABLED";
     GuildFeature["RelayEnabled"] = "RELAY_ENABLED";
     /**
      * Guild is able to set role icons
      */
     GuildFeature["RoleIcons"] = "ROLE_ICONS";
     /**
-     * Guild has access to the seven day archive time for threads
+     * Guild has role subscriptions that can be purchased
      */
-    GuildFeature["SevenDayThreadArchive"] = "SEVEN_DAY_THREAD_ARCHIVE";
+    GuildFeature["RoleSubscriptionsAvailableForPurchase"] = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE";
     /**
-     * Guild has access to the three day archive time for threads
+     * Guild has enabled role subscriptions
      */
-    GuildFeature["ThreeDayThreadArchive"] = "THREE_DAY_THREAD_ARCHIVE";
+    GuildFeature["RoleSubscriptionsEnabled"] = "ROLE_SUBSCRIPTIONS_ENABLED";
+    /**
+     * Guild has created soundboard sounds
+     */
+    GuildFeature["Soundboard"] = "SOUNDBOARD";
     /**
      * Guild has enabled ticketed events
      */
@@ -211,11 +255,78 @@ var GuildFeature;
      * Guild has enabled the welcome screen
      */
     GuildFeature["WelcomeScreenEnabled"] = "WELCOME_SCREEN_ENABLED";
+    /**
+     * Guild has access to set guild tags
+     */
+    GuildFeature["GuildTags"] = "GUILD_TAGS";
+    /**
+     * Guild is able to set gradient colors to roles
+     */
+    GuildFeature["EnhancedRoleColors"] = "ENHANCED_ROLE_COLORS";
+    /**
+     * Guild has access to guest invites
+     */
+    GuildFeature["GuestsEnabled"] = "GUESTS_ENABLED";
+    /**
+     * Guild has migrated to the new pin messages permission
+     *
+     * @unstable This feature is currently not documented by Discord, but has known value
+     */
+    GuildFeature["PinPermissionMigrationComplete"] = "PIN_PERMISSION_MIGRATION_COMPLETE";
 })(GuildFeature || (exports.GuildFeature = GuildFeature = {}));
 /**
- * https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags}
+ */
+var GuildMemberFlags;
+(function (GuildMemberFlags) {
+    /**
+     * Member has left and rejoined the guild
+     */
+    GuildMemberFlags[GuildMemberFlags["DidRejoin"] = 1] = "DidRejoin";
+    /**
+     * Member has completed onboarding
+     */
+    GuildMemberFlags[GuildMemberFlags["CompletedOnboarding"] = 2] = "CompletedOnboarding";
+    /**
+     * Member is exempt from guild verification requirements
+     */
+    GuildMemberFlags[GuildMemberFlags["BypassesVerification"] = 4] = "BypassesVerification";
+    /**
+     * Member has started onboarding
+     */
+    GuildMemberFlags[GuildMemberFlags["StartedOnboarding"] = 8] = "StartedOnboarding";
+    /**
+     * Member is a guest and can only access the voice channel they were invited to
+     */
+    GuildMemberFlags[GuildMemberFlags["IsGuest"] = 16] = "IsGuest";
+    /**
+     * Member has started Server Guide new member actions
+     */
+    GuildMemberFlags[GuildMemberFlags["StartedHomeActions"] = 32] = "StartedHomeActions";
+    /**
+     * Member has completed Server Guide new member actions
+     */
+    GuildMemberFlags[GuildMemberFlags["CompletedHomeActions"] = 64] = "CompletedHomeActions";
+    /**
+     * Member's username, display name, or nickname is blocked by AutoMod
+     */
+    GuildMemberFlags[GuildMemberFlags["AutomodQuarantinedUsernameOrGuildNickname"] = 128] = "AutomodQuarantinedUsernameOrGuildNickname";
+    /**
+     * @deprecated
+     * {@link https://github.com/discord/discord-api-docs/pull/7113 | discord-api-docs#7113}
+     */
+    GuildMemberFlags[GuildMemberFlags["AutomodQuarantinedBio"] = 256] = "AutomodQuarantinedBio";
+    /**
+     * Member has dismissed the DM settings upsell
+     */
+    GuildMemberFlags[GuildMemberFlags["DmSettingsUpsellAcknowledged"] = 512] = "DmSettingsUpsellAcknowledged";
+    /**
+     * Member's guild tag is blocked by AutoMod
+     */
+    GuildMemberFlags[GuildMemberFlags["AutoModQuarantinedGuildTag"] = 1024] = "AutoModQuarantinedGuildTag";
+})(GuildMemberFlags || (exports.GuildMemberFlags = GuildMemberFlags = {}));
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors}
  */
 var IntegrationExpireBehavior;
 (function (IntegrationExpireBehavior) {
@@ -223,9 +334,7 @@ var IntegrationExpireBehavior;
     IntegrationExpireBehavior[IntegrationExpireBehavior["Kick"] = 1] = "Kick";
 })(IntegrationExpireBehavior || (exports.IntegrationExpireBehavior = IntegrationExpireBehavior = {}));
 /**
- * https://discord.com/developers/docs/resources/guild#get-guild-widget-image-widget-style-options
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-widget-image-widget-style-options}
  */
 var GuildWidgetStyle;
 (function (GuildWidgetStyle) {
@@ -252,7 +361,7 @@ var GuildWidgetStyle;
     GuildWidgetStyle["Banner4"] = "banner4";
 })(GuildWidgetStyle || (exports.GuildWidgetStyle = GuildWidgetStyle = {}));
 /**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @unstable https://github.com/discord/discord-api-docs/pull/2547
  */
 var MembershipScreeningFieldType;
 (function (MembershipScreeningFieldType) {
@@ -261,4 +370,26 @@ var MembershipScreeningFieldType;
      */
     MembershipScreeningFieldType["Terms"] = "TERMS";
 })(MembershipScreeningFieldType || (exports.MembershipScreeningFieldType = MembershipScreeningFieldType = {}));
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-mode}
+ */
+var GuildOnboardingMode;
+(function (GuildOnboardingMode) {
+    /**
+     * Counts only Default Channels towards constraints
+     */
+    GuildOnboardingMode[GuildOnboardingMode["OnboardingDefault"] = 0] = "OnboardingDefault";
+    /**
+     * Counts Default Channels and Questions towards constraints
+     */
+    GuildOnboardingMode[GuildOnboardingMode["OnboardingAdvanced"] = 1] = "OnboardingAdvanced";
+})(GuildOnboardingMode || (exports.GuildOnboardingMode = GuildOnboardingMode = {}));
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-types}
+ */
+var GuildOnboardingPromptType;
+(function (GuildOnboardingPromptType) {
+    GuildOnboardingPromptType[GuildOnboardingPromptType["MultipleChoice"] = 0] = "MultipleChoice";
+    GuildOnboardingPromptType[GuildOnboardingPromptType["Dropdown"] = 1] = "Dropdown";
+})(GuildOnboardingPromptType || (exports.GuildOnboardingPromptType = GuildOnboardingPromptType = {}));
 //# sourceMappingURL=guild.js.map

@@ -2,12 +2,11 @@
  * Types extracted from https://discord.com/developers/docs/resources/emoji
  */
 import type { Snowflake } from '../../globals';
+import type { _NonNullableFields } from '../../utils/internals';
 import type { APIRole } from './permissions';
 import type { APIUser } from './user';
 /**
  * Not documented but mentioned
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
  */
 export interface APIPartialEmoji {
     /**
@@ -24,9 +23,7 @@ export interface APIPartialEmoji {
     animated?: boolean;
 }
 /**
- * https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure}
  */
 export interface APIEmoji extends APIPartialEmoji {
     /**
@@ -50,4 +47,33 @@ export interface APIEmoji extends APIPartialEmoji {
      */
     available?: boolean;
 }
+/**
+ * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object-applicationowned-emoji}
+ */
+export type APIApplicationEmoji = _NonNullableFields<Required<Pick<APIEmoji, 'animated' | 'id' | 'name' | 'user'>>> & {
+    /**
+     * Roles allowed to use this emoji.
+     *
+     * @remarks Always empty.
+     */
+    roles: [];
+    /**
+     * Whether this emoji must be wrapped in colons.
+     *
+     * @remarks Always `true`.
+     */
+    require_colons: true;
+    /**
+     * Whether this emoji is managed.
+     *
+     * @remarks Always `false`.
+     */
+    managed: false;
+    /**
+     * Whether this emoji is available.
+     *
+     * @remarks Always `true`.
+     */
+    available: true;
+};
 //# sourceMappingURL=emoji.d.ts.map

@@ -2,36 +2,32 @@
  * Types extracted from https://discord.com/developers/docs/resources/guild
  */
 import type { Permissions, Snowflake } from '../../globals';
-import type { APIChannel } from './channel';
-import type { APIEmoji } from './emoji';
-import type { GatewayPresenceUpdate, PresenceUpdateStatus } from './gateway';
-import type { APIGuildScheduledEvent } from './guildScheduledEvent';
+import type { Locale } from '../../rest/common';
+import type { APIEmoji, APIPartialEmoji } from './emoji';
+import type { PresenceUpdateReceiveStatus } from './gateway';
+import type { OAuth2Scopes } from './oauth2';
 import type { APIRole } from './permissions';
-import type { APIStageInstance } from './stageInstance';
 import type { APISticker } from './sticker';
-import type { APIUser } from './user';
-import type { GatewayVoiceState } from './voice';
-/**
- * https://discord.com/developers/docs/resources/guild#unavailable-guild-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
-export interface APIUnavailableGuild {
+import type { APIAvatarDecorationData, APIUser } from './user';
+export interface APIBaseGuild {
     /**
      * Guild id
      */
     id: Snowflake;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#unavailable-guild-object}
+ */
+export interface APIUnavailableGuild extends APIBaseGuild {
     /**
      * `true` if this guild is unavailable due to an outage
      */
     unavailable: boolean;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-structure}
  */
-export interface APIPartialGuild extends Omit<APIUnavailableGuild, 'unavailable'>, Pick<APIGuild, 'welcome_screen'> {
+export interface APIPartialGuild extends APIBaseGuild {
     /**
      * Guild name (2-100 characters, excluding trailing and leading whitespace)
      */
@@ -39,35 +35,35 @@ export interface APIPartialGuild extends Omit<APIUnavailableGuild, 'unavailable'
     /**
      * Icon hash
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     icon: string | null;
     /**
      * Splash hash
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     splash: string | null;
     /**
      * Banner hash
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     banner?: string | null;
     /**
-     * The description for the guild, if the guild is discoverable
+     * The description for the guild
      */
     description?: string | null;
     /**
      * Enabled guild features
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-guild-features
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-features}
      */
     features?: GuildFeature[];
     /**
      * Verification level required for the guild
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-verification-level
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
      */
     verification_level?: GuildVerificationLevel;
     /**
@@ -75,26 +71,30 @@ export interface APIPartialGuild extends Omit<APIUnavailableGuild, 'unavailable'
      */
     vanity_url_code?: string | null;
     /**
-     * `true` if this guild is unavailable due to an outage
+     * The welcome screen of a Community guild, shown to new members
+     *
+     * Returned in the invite object
      */
-    unavailable?: boolean;
+    welcome_screen?: APIGuildWelcomeScreen;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * Source guild of channel follower webhooks.
+ */
+export type APIWebhookSourceGuild = Pick<APIPartialGuild, 'icon' | 'id' | 'name'>;
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-structure}
  */
 export interface APIGuild extends APIPartialGuild {
     /**
      * Icon hash, returned when in the template object
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     icon_hash?: string | null;
     /**
      * Discovery splash hash; only present for guilds with the "DISCOVERABLE" feature
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     discovery_splash: string | null;
     /**
@@ -112,14 +112,13 @@ export interface APIGuild extends APIPartialGuild {
      *
      * **This field is only received from https://discord.com/developers/docs/resources/user#get-current-user-guilds**
      *
-     * See https://en.wikipedia.org/wiki/Bit_field
+     * @see {@link https://en.wikipedia.org/wiki/Bit_field}
      */
     permissions?: Permissions;
     /**
      * Voice region id for the guild
      *
-     * See https://discord.com/developers/docs/resources/voice#voice-region-object
-     *
+     * @see {@link https://discord.com/developers/docs/resources/voice#voice-region-object}
      * @deprecated This field has been deprecated in favor of `rtc_region` on the channel.
      */
     region: string;
@@ -128,9 +127,9 @@ export interface APIGuild extends APIPartialGuild {
      */
     afk_channel_id: Snowflake | null;
     /**
-     * afk timeout in seconds
+     * afk timeout in seconds, can be set to: `60`, `300`, `900`, `1800`, `3600`
      */
-    afk_timeout: number;
+    afk_timeout: 1800 | 3600 | 60 | 300 | 900;
     /**
      * `true` if the guild widget is enabled
      */
@@ -142,43 +141,43 @@ export interface APIGuild extends APIPartialGuild {
     /**
      * Verification level required for the guild
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-verification-level
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
      */
     verification_level: GuildVerificationLevel;
     /**
      * Default message notifications level
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
      */
     default_message_notifications: GuildDefaultMessageNotifications;
     /**
      * Explicit content filter level
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
      */
     explicit_content_filter: GuildExplicitContentFilter;
     /**
      * Roles in the guild
      *
-     * See https://discord.com/developers/docs/topics/permissions#role-object
+     * @see {@link https://discord.com/developers/docs/topics/permissions#role-object}
      */
     roles: APIRole[];
     /**
      * Custom guild emojis
      *
-     * See https://discord.com/developers/docs/resources/emoji#emoji-object
+     * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object}
      */
     emojis: APIEmoji[];
     /**
      * Enabled guild features
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-guild-features
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-features}
      */
     features: GuildFeature[];
     /**
      * Required MFA level for the guild
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-mfa-level
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
      */
     mfa_level: GuildMFALevel;
     /**
@@ -192,63 +191,13 @@ export interface APIGuild extends APIPartialGuild {
     /**
      * System channel flags
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
      */
     system_channel_flags: GuildSystemChannelFlags;
     /**
      * The id of the channel where Community guilds can display rules and/or guidelines
      */
     rules_channel_id: Snowflake | null;
-    /**
-     * When this guild was joined at
-     *
-     * **This field is only sent within the [GUILD_CREATE](https://discord.com/developers/docs/topics/gateway#guild-create) event**
-     */
-    joined_at?: string;
-    /**
-     * `true` if this is considered a large guild
-     *
-     * **This field is only sent within the [GUILD_CREATE](https://discord.com/developers/docs/topics/gateway#guild-create) event**
-     */
-    large?: boolean;
-    /**
-     * Total number of members in this guild
-     *
-     * **This field is only sent within the [GUILD_CREATE](https://discord.com/developers/docs/topics/gateway#guild-create) event**
-     */
-    member_count?: number;
-    /**
-     * States of members currently in voice channels; lacks the `guild_id` key
-     *
-     * **This field is only sent within the [GUILD_CREATE](https://discord.com/developers/docs/topics/gateway#guild-create) event**
-     *
-     * See https://discord.com/developers/docs/resources/voice#voice-state-object
-     */
-    voice_states?: Omit<GatewayVoiceState, 'guild_id'>[];
-    /**
-     * Users in the guild
-     *
-     * **This field is only sent within the [GUILD_CREATE](https://discord.com/developers/docs/topics/gateway#guild-create) event**
-     *
-     * See https://discord.com/developers/docs/resources/guild#guild-member-object
-     */
-    members?: APIGuildMember[];
-    /**
-     * Channels in the guild
-     *
-     * **This field is only sent within the [GUILD_CREATE](https://discord.com/developers/docs/topics/gateway#guild-create) event**
-     *
-     * See https://discord.com/developers/docs/resources/channel#channel-object
-     */
-    channels?: APIChannel[];
-    /**
-     * Presences of the members in the guild, will only include non-offline members if the size is greater than `large_threshold`
-     *
-     * **This field is only sent within the [GUILD_CREATE](https://discord.com/developers/docs/topics/gateway#guild-create) event**
-     *
-     * See https://discord.com/developers/docs/topics/gateway#presence-update
-     */
-    presences?: GatewayPresenceUpdate[];
     /**
      * The maximum number of presences for the guild (`null` is always returned, apart from the largest of guilds)
      */
@@ -262,19 +211,19 @@ export interface APIGuild extends APIPartialGuild {
      */
     vanity_url_code: string | null;
     /**
-     * The description for the guild, if the guild is discoverable
+     * The description for the guild
      */
     description: string | null;
     /**
      * Banner hash
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     banner: string | null;
     /**
      * Premium tier (Server Boost level)
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-premium-tier
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-premium-tier}
      */
     premium_tier: GuildPremiumTier;
     /**
@@ -282,11 +231,11 @@ export interface APIGuild extends APIPartialGuild {
      */
     premium_subscription_count?: number;
     /**
-     * The preferred locale of a Community guild; used in guild discovery and notices from Discord; defaults to "en-US"
+     * The preferred locale of a Community guild; used in guild discovery and notices from Discord
      *
-     * @default "en-US"
+     * @defaultValue `"en-US"`
      */
-    preferred_locale: string;
+    preferred_locale: Locale;
     /**
      * The id of the channel where admins and moderators of Community guilds receive notices from Discord
      */
@@ -296,37 +245,29 @@ export interface APIGuild extends APIPartialGuild {
      */
     max_video_channel_users?: number;
     /**
-     * **This field is only received from https://discord.com/developers/docs/resources/guild#get-guild with the `with_counts` query parameter set to `true`**
+     * The maximum amount of users in a stage video channel
+     */
+    max_stage_video_channel_users?: number;
+    /**
+     * Approximate number of members in this guild,
+     * returned from the `GET /guilds/<id>` and `/users/@me/guilds` (OAuth2) endpoints when `with_counts` is `true`
      */
     approximate_member_count?: number;
     /**
-     * **This field is only received from https://discord.com/developers/docs/resources/guild#get-guild with the `with_counts` query parameter set to `true`**
+     * Approximate number of non-offline members in this guild,
+     * returned from the `GET /guilds/<id>` and `/users/@me/guilds` (OAuth2) endpoints when `with_counts` is `true`
      */
     approximate_presence_count?: number;
     /**
-     * The welcome screen of a Community guild, shown to new members
-     *
-     * Returned in the invite object
-     */
-    welcome_screen?: APIGuildWelcomeScreen;
-    /**
      * The nsfw level of the guild
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
      */
     nsfw_level: GuildNSFWLevel;
     /**
-     * The stage instances in the guild
-     *
-     * **This field is only sent within the [GUILD_CREATE](https://discord.com/developers/docs/topics/gateway#guild-create) event**
-     *
-     * See https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-stage-instance-structure
-     */
-    stage_instances?: APIStageInstance[];
-    /**
      * Custom guild stickers
      *
-     * See https://discord.com/developers/docs/resources/sticker#sticker-object
+     * @see {@link https://discord.com/developers/docs/resources/sticker#sticker-object}
      */
     stickers: APISticker[];
     /**
@@ -334,27 +275,39 @@ export interface APIGuild extends APIPartialGuild {
      */
     premium_progress_bar_enabled: boolean;
     /**
-     * The scheduled events in the guild
-     *
-     * **This field is only sent within the [GUILD_CREATE](https://discord.com/developers/docs/topics/gateway#guild-create) event**
-     *
-     * https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object
+     * The type of Student Hub the guild is
      */
-    guild_scheduled_events?: APIGuildScheduledEvent[];
+    hub_type: GuildHubType | null;
+    /**
+     * The id of the channel where admins and moderators of Community guilds receive safety alerts from Discord
+     */
+    safety_alerts_channel_id: Snowflake | null;
+    /**
+     * The incidents data for this guild
+     */
+    incidents_data: APIIncidentsData | null;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-structure}
+ */
+export interface APIPartialInteractionGuild extends Pick<APIGuild, 'features' | 'id'> {
+    /**
+     * The preferred locale of a Community guild; used in guild discovery and notices from Discord
+     *
+     * @unstable https://github.com/discord/discord-api-docs/issues/6938
+     * @defaultValue `"en-US"`
+     */
+    locale: Locale;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level}
  */
 export declare enum GuildDefaultMessageNotifications {
     AllMessages = 0,
     OnlyMentions = 1
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level}
  */
 export declare enum GuildExplicitContentFilter {
     Disabled = 0,
@@ -362,18 +315,14 @@ export declare enum GuildExplicitContentFilter {
     AllMembers = 2
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-mfa-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-mfa-level}
  */
 export declare enum GuildMFALevel {
     None = 0,
     Elevated = 1
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level}
  */
 export declare enum GuildNSFWLevel {
     Default = 0,
@@ -382,9 +331,7 @@ export declare enum GuildNSFWLevel {
     AgeRestricted = 3
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-verification-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-verification-level}
  */
 export declare enum GuildVerificationLevel {
     /**
@@ -409,9 +356,7 @@ export declare enum GuildVerificationLevel {
     VeryHigh = 4
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-premium-tier
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-premium-tier}
  */
 export declare enum GuildPremiumTier {
     None = 0,
@@ -419,10 +364,13 @@ export declare enum GuildPremiumTier {
     Tier2 = 2,
     Tier3 = 3
 }
+export declare enum GuildHubType {
+    Default = 0,
+    HighSchool = 1,
+    College = 2
+}
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags}
  */
 export declare enum GuildSystemChannelFlags {
     /**
@@ -443,9 +391,7 @@ export declare enum GuildSystemChannelFlags {
     SuppressJoinNotificationReplies = 8
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-object-guild-features
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-features}
  */
 export declare enum GuildFeature {
     /**
@@ -457,17 +403,35 @@ export declare enum GuildFeature {
      */
     AnimatedIcon = "ANIMATED_ICON",
     /**
+     * Guild is using the old permissions configuration behavior
+     *
+     * @see {@link https://discord.com/developers/docs/change-log#upcoming-application-command-permission-changes}
+     */
+    ApplicationCommandPermissionsV2 = "APPLICATION_COMMAND_PERMISSIONS_V2",
+    /**
+     * Guild has set up auto moderation rules
+     */
+    AutoModeration = "AUTO_MODERATION",
+    /**
      * Guild has access to set a guild banner image
      */
     Banner = "BANNER",
     /**
-     * Guild has access to use commerce features (i.e. create store channels)
-     */
-    Commerce = "COMMERCE",
-    /**
      * Guild can enable welcome screen, Membership Screening and discovery, and receives community updates
      */
     Community = "COMMUNITY",
+    /**
+     * Guild has enabled monetization
+     */
+    CreatorMonetizableProvisional = "CREATOR_MONETIZABLE_PROVISIONAL",
+    /**
+     * Guild has enabled the role subscription promo page
+     */
+    CreatorStorePage = "CREATOR_STORE_PAGE",
+    /**
+     * Guild has been set as a support server on the App Directory
+     */
+    DeveloperSupportServer = "DEVELOPER_SUPPORT_SERVER",
     /**
      * Guild is able to be discovered in the directory
      */
@@ -477,15 +441,43 @@ export declare enum GuildFeature {
      */
     Featurable = "FEATURABLE",
     /**
+     * Guild is listed in a directory channel
+     */
+    HasDirectoryEntry = "HAS_DIRECTORY_ENTRY",
+    /**
+     * Guild is a Student Hub
+     *
+     * @see {@link https://support.discord.com/hc/articles/4406046651927}
+     * @unstable This feature is currently not documented by Discord, but has known value
+     */
+    Hub = "HUB",
+    /**
+     * Guild has disabled invite usage, preventing users from joining
+     */
+    InvitesDisabled = "INVITES_DISABLED",
+    /**
      * Guild has access to set an invite splash background
      */
     InviteSplash = "INVITE_SPLASH",
+    /**
+     * Guild is in a Student Hub
+     *
+     * @see {@link https://support.discord.com/hc/articles/4406046651927}
+     * @unstable This feature is currently not documented by Discord, but has known value
+     */
+    LinkedToHub = "LINKED_TO_HUB",
     /**
      * Guild has enabled Membership Screening
      */
     MemberVerificationGateEnabled = "MEMBER_VERIFICATION_GATE_ENABLED",
     /**
+     * Guild has increased custom soundboard sound slots
+     */
+    MoreSoundboard = "MORE_SOUNDBOARD",
+    /**
      * Guild has enabled monetization
+     *
+     * @unstable This feature is no longer documented by Discord
      */
     MonetizationEnabled = "MONETIZATION_ENABLED",
     /**
@@ -508,19 +500,27 @@ export declare enum GuildFeature {
      * Guild has access to create private threads
      */
     PrivateThreads = "PRIVATE_THREADS",
+    /**
+     * Guild has disabled alerts for join raids in the configured safety alerts channel
+     */
+    RaidAlertsDisabled = "RAID_ALERTS_DISABLED",
     RelayEnabled = "RELAY_ENABLED",
     /**
      * Guild is able to set role icons
      */
     RoleIcons = "ROLE_ICONS",
     /**
-     * Guild has access to the seven day archive time for threads
+     * Guild has role subscriptions that can be purchased
      */
-    SevenDayThreadArchive = "SEVEN_DAY_THREAD_ARCHIVE",
+    RoleSubscriptionsAvailableForPurchase = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
     /**
-     * Guild has access to the three day archive time for threads
+     * Guild has enabled role subscriptions
      */
-    ThreeDayThreadArchive = "THREE_DAY_THREAD_ARCHIVE",
+    RoleSubscriptionsEnabled = "ROLE_SUBSCRIPTIONS_ENABLED",
+    /**
+     * Guild has created soundboard sounds
+     */
+    Soundboard = "SOUNDBOARD",
     /**
      * Guild has enabled ticketed events
      */
@@ -540,12 +540,28 @@ export declare enum GuildFeature {
     /**
      * Guild has enabled the welcome screen
      */
-    WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED"
+    WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED",
+    /**
+     * Guild has access to set guild tags
+     */
+    GuildTags = "GUILD_TAGS",
+    /**
+     * Guild is able to set gradient colors to roles
+     */
+    EnhancedRoleColors = "ENHANCED_ROLE_COLORS",
+    /**
+     * Guild has access to guest invites
+     */
+    GuestsEnabled = "GUESTS_ENABLED",
+    /**
+     * Guild has migrated to the new pin messages permission
+     *
+     * @unstable This feature is currently not documented by Discord, but has known value
+     */
+    PinPermissionMigrationComplete = "PIN_PERMISSION_MIGRATION_COMPLETE"
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-preview-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-preview-object}
  */
 export interface APIGuildPreview {
     /**
@@ -559,31 +575,31 @@ export interface APIGuildPreview {
     /**
      * Icon hash
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     icon: string | null;
     /**
      * Splash hash
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     splash: string | null;
     /**
      * Discovery splash hash; only present for guilds with the "DISCOVERABLE" feature
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     discovery_splash: string | null;
     /**
      * Custom guild emojis
      *
-     * See https://discord.com/developers/docs/resources/emoji#emoji-object
+     * @see {@link https://discord.com/developers/docs/resources/emoji#emoji-object}
      */
     emojis: APIEmoji[];
     /**
      * Enabled guild features
      *
-     * See https://discord.com/developers/docs/resources/guild#guild-object-guild-features
+     * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-features}
      */
     features: GuildFeature[];
     /**
@@ -604,9 +620,7 @@ export interface APIGuildPreview {
     stickers: APISticker[];
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-widget-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-widget-object}
  */
 export interface APIGuildWidgetSettings {
     /**
@@ -619,51 +633,25 @@ export interface APIGuildWidgetSettings {
     channel_id: Snowflake | null;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#guild-member-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object}
  */
-export interface APIGuildMember {
-    /**
-     * The user this guild member represents
-     *
-     * **This field won't be included in the member object attached to `MESSAGE_CREATE` and `MESSAGE_UPDATE` gateway events.**
-     *
-     * See https://discord.com/developers/docs/resources/user#user-object
-     */
-    user?: APIUser;
+export interface APIBaseGuildMember {
     /**
      * This users guild nickname
      */
     nick?: string | null;
     /**
-     * The member's guild avatar hash
-     */
-    avatar?: string | null;
-    /**
      * Array of role object ids
      *
-     * See https://discord.com/developers/docs/topics/permissions#role-object
+     * @see {@link https://discord.com/developers/docs/topics/permissions#role-object}
      */
     roles: Snowflake[];
     /**
-     * When the user joined the guild
-     */
-    joined_at: string;
-    /**
      * When the user started boosting the guild
      *
-     * See https://support.discord.com/hc/en-us/articles/360028038352-Server-Boosting-
+     * @see {@link https://support.discord.com/hc/articles/360028038352}
      */
     premium_since?: string | null;
-    /**
-     * Whether the user is deafened in voice channels
-     */
-    deaf: boolean;
-    /**
-     * Whether the user is muted in voice channels
-     */
-    mute: boolean;
     /**
      * Whether the user has not yet passed the guild's Membership Screening requirements
      *
@@ -674,11 +662,129 @@ export interface APIGuildMember {
      * Timestamp of when the time out will be removed; until then, they cannot interact with the guild
      */
     communication_disabled_until?: string | null;
+    /**
+     * The data for the member's guild avatar decoration
+     *
+     * @see {@link https://discord.com/developers/docs/resources/user#avatar-decoration-data-object}
+     */
+    avatar_decoration_data?: APIAvatarDecorationData | null;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#integration-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object}
+ */
+export interface APIFlaggedGuildMember {
+    /**
+     * Guild member flags represented as a bit set
+     *
+     * @defaultValue `0`
+     */
+    flags: GuildMemberFlags;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object}
+ */
+export interface APIGuildMemberJoined {
+    /**
+     * When the user joined the guild
+     */
+    joined_at: string | null;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object}
+ */
+export interface APIGuildMemberAvatar {
+    /**
+     * The member's guild avatar hash
+     */
+    avatar?: string | null;
+    /**
+     * The member's guild banner hash
+     */
+    banner?: string | null;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object}
+ */
+export interface APIBaseVoiceGuildMember {
+    /**
+     * Whether the user is deafened in voice channels
+     */
+    deaf: boolean;
+    /**
+     * Whether the user is muted in voice channels
+     */
+    mute: boolean;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object}
+ */
+export interface APIGuildMemberUser {
+    /**
+     * The user this guild member represents
+     *
+     * **This field won't be included in the member object attached to `MESSAGE_CREATE` and `MESSAGE_UPDATE` gateway events.**
+     *
+     * @see {@link https://discord.com/developers/docs/resources/user#user-object}
+     */
+    user: APIUser;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object}
+ */
+export interface APIGuildMember extends APIBaseGuildMember, APIBaseVoiceGuildMember, APIFlaggedGuildMember, APIGuildMemberAvatar, APIGuildMemberJoined, APIGuildMemberUser {
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags}
+ */
+export declare enum GuildMemberFlags {
+    /**
+     * Member has left and rejoined the guild
+     */
+    DidRejoin = 1,
+    /**
+     * Member has completed onboarding
+     */
+    CompletedOnboarding = 2,
+    /**
+     * Member is exempt from guild verification requirements
+     */
+    BypassesVerification = 4,
+    /**
+     * Member has started onboarding
+     */
+    StartedOnboarding = 8,
+    /**
+     * Member is a guest and can only access the voice channel they were invited to
+     */
+    IsGuest = 16,
+    /**
+     * Member has started Server Guide new member actions
+     */
+    StartedHomeActions = 32,
+    /**
+     * Member has completed Server Guide new member actions
+     */
+    CompletedHomeActions = 64,
+    /**
+     * Member's username, display name, or nickname is blocked by AutoMod
+     */
+    AutomodQuarantinedUsernameOrGuildNickname = 128,
+    /**
+     * @deprecated
+     * {@link https://github.com/discord/discord-api-docs/pull/7113 | discord-api-docs#7113}
+     */
+    AutomodQuarantinedBio = 256,
+    /**
+     * Member has dismissed the DM settings upsell
+     */
+    DmSettingsUpsellAcknowledged = 512,
+    /**
+     * Member's guild tag is blocked by AutoMod
+     */
+    AutoModQuarantinedGuildTag = 1024
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#integration-object}
  */
 export interface APIGuildIntegration {
     /**
@@ -692,7 +798,7 @@ export interface APIGuildIntegration {
     /**
      * Integration type
      */
-    type: APIGuildInteractionType;
+    type: APIGuildIntegrationType;
     /**
      * Is this integration enabled
      */
@@ -720,7 +826,7 @@ export interface APIGuildIntegration {
      *
      * **This field is not provided for `discord` bot integrations.**
      *
-     * See https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors
+     * @see {@link https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors}
      */
     expire_behavior?: IntegrationExpireBehavior;
     /**
@@ -732,15 +838,15 @@ export interface APIGuildIntegration {
     /**
      * User for this integration
      *
-     * **This field is not provided for `discord` bot integrations.**
+     * **Some older integrations may not have an attached user.**
      *
-     * See https://discord.com/developers/docs/resources/user#user-object
+     * @see {@link https://discord.com/developers/docs/resources/user#user-object}
      */
     user?: APIUser;
     /**
      * Integration account information
      *
-     * See https://discord.com/developers/docs/resources/guild#integration-account-object
+     * @see {@link https://discord.com/developers/docs/resources/guild#integration-account-object}
      */
     account: APIIntegrationAccount;
     /**
@@ -764,29 +870,26 @@ export interface APIGuildIntegration {
     /**
      * The bot/OAuth2 application for discord integrations
      *
-     * See https://discord.com/developers/docs/resources/guild#integration-application-object
+     * @see {@link https://discord.com/developers/docs/resources/guild#integration-application-object}
      *
      * **This field is not provided for `discord` bot integrations.**
      */
     application?: APIGuildIntegrationApplication;
+    /**
+     * The scopes the application has been authorized for
+     */
+    scopes?: OAuth2Scopes[];
 }
+export type APIGuildIntegrationType = 'discord' | 'guild_subscription' | 'twitch' | 'youtube';
 /**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
-export type APIGuildInteractionType = 'discord' | 'twitch' | 'youtube';
-/**
- * https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors}
  */
 export declare enum IntegrationExpireBehavior {
     RemoveRole = 0,
     Kick = 1
 }
 /**
- * https://discord.com/developers/docs/resources/guild#integration-account-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#integration-account-object}
  */
 export interface APIIntegrationAccount {
     /**
@@ -799,9 +902,7 @@ export interface APIIntegrationAccount {
     name: string;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#integration-application-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#integration-application-object}
  */
 export interface APIGuildIntegrationApplication {
     /**
@@ -815,7 +916,7 @@ export interface APIGuildIntegrationApplication {
     /**
      * The icon hash of the app
      *
-     * See https://discord.com/developers/docs/reference#image-formatting
+     * @see {@link https://discord.com/developers/docs/reference#image-formatting}
      */
     icon: string | null;
     /**
@@ -823,22 +924,14 @@ export interface APIGuildIntegrationApplication {
      */
     description: string;
     /**
-     * The summary of the app
-     *
-     * @deprecated Always an empty string, will be removed in v11
-     */
-    summary: '';
-    /**
      * The bot associated with this application
      *
-     * See https://discord.com/developers/docs/resources/user#user-object
+     * @see {@link https://discord.com/developers/docs/resources/user#user-object}
      */
     bot?: APIUser;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#ban-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#ban-object}
  */
 export interface APIBan {
     /**
@@ -851,9 +944,7 @@ export interface APIBan {
     user: APIUser;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#get-guild-widget-example-get-guild-widget
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-widget-object}
  */
 export interface APIGuildWidget {
     id: Snowflake;
@@ -864,9 +955,7 @@ export interface APIGuildWidget {
     presence_count: number;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#get-guild-widget-example-get-guild-widget
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-widget-object-example-guild-widget}
  */
 export interface APIGuildWidgetChannel {
     id: Snowflake;
@@ -874,25 +963,21 @@ export interface APIGuildWidgetChannel {
     position: number;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#get-guild-widget-example-get-guild-widget
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-widget-object-example-guild-widget}
  */
 export interface APIGuildWidgetMember {
     id: string;
     username: string;
     discriminator: string;
     avatar: string | null;
-    status: PresenceUpdateStatus;
+    status: PresenceUpdateReceiveStatus;
     activity?: {
         name: string;
     };
     avatar_url: string;
 }
 /**
- * https://discord.com/developers/docs/resources/guild#get-guild-widget-image-widget-style-options
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/guild#get-guild-widget-image-widget-style-options}
  */
 export declare enum GuildWidgetStyle {
     /**
@@ -917,9 +1002,6 @@ export declare enum GuildWidgetStyle {
      */
     Banner4 = "banner4"
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
 export interface APIGuildWelcomeScreen {
     /**
      * The welcome screen short message
@@ -930,9 +1012,6 @@ export interface APIGuildWelcomeScreen {
      */
     welcome_channels: APIGuildWelcomeScreenChannel[];
 }
-/**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
- */
 export interface APIGuildWelcomeScreenChannel {
     /**
      * The channel id that is suggested
@@ -952,7 +1031,7 @@ export interface APIGuildWelcomeScreenChannel {
     emoji_name: string | null;
 }
 /**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @unstable https://github.com/discord/discord-api-docs/pull/2547
  */
 export interface APIGuildMembershipScreening {
     /**
@@ -969,7 +1048,7 @@ export interface APIGuildMembershipScreening {
     description: string | null;
 }
 /**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @unstable https://github.com/discord/discord-api-docs/pull/2547
  */
 export interface APIGuildMembershipScreeningField {
     /**
@@ -990,12 +1069,141 @@ export interface APIGuildMembershipScreeningField {
     required: boolean;
 }
 /**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @unstable https://github.com/discord/discord-api-docs/pull/2547
  */
 export declare enum MembershipScreeningFieldType {
     /**
      * Server Rules
      */
     Terms = "TERMS"
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-onboarding-object-guild-onboarding-structure}
+ */
+export interface APIGuildOnboarding {
+    /**
+     * Id of the guild this onboarding is part of
+     */
+    guild_id: Snowflake;
+    /**
+     * Prompts shown during onboarding and in customize community
+     */
+    prompts: APIGuildOnboardingPrompt[];
+    /**
+     * Channel ids that members get opted into automatically
+     */
+    default_channel_ids: Snowflake[];
+    /**
+     * Whether onboarding is enabled in the guild
+     */
+    enabled: boolean;
+    /**
+     * Current mode of onboarding
+     */
+    mode: GuildOnboardingMode;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-prompt-structure}
+ */
+export interface APIGuildOnboardingPrompt {
+    /**
+     * Id of the prompt
+     */
+    id: Snowflake;
+    /**
+     * Options available within the prompt
+     */
+    options: APIGuildOnboardingPromptOption[];
+    /**
+     * Title of the prompt
+     */
+    title: string;
+    /**
+     * Indicates whether users are limited to selecting one option for the prompt
+     */
+    single_select: boolean;
+    /**
+     * Indicates whether the prompt is required before a user completes the onboarding flow
+     */
+    required: boolean;
+    /**
+     * Indicates whether the prompt is present in the onboarding flow.
+     * If `false`, the prompt will only appear in the Channels & Roles tab
+     */
+    in_onboarding: boolean;
+    /**
+     * Type of prompt
+     */
+    type: GuildOnboardingPromptType;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-option-structure}
+ */
+export interface APIGuildOnboardingPromptOption {
+    /**
+     * Id of the prompt option
+     */
+    id: Snowflake;
+    /**
+     * Ids for channels a member is added to when the option is selected
+     */
+    channel_ids: Snowflake[];
+    /**
+     * Ids for roles assigned to a member when the option is selected
+     */
+    role_ids: Snowflake[];
+    /**
+     * Emoji of the option
+     */
+    emoji: APIPartialEmoji;
+    /**
+     * Title of the option
+     */
+    title: string;
+    /**
+     * Description of the option
+     */
+    description: string | null;
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-mode}
+ */
+export declare enum GuildOnboardingMode {
+    /**
+     * Counts only Default Channels towards constraints
+     */
+    OnboardingDefault = 0,
+    /**
+     * Counts Default Channels and Questions towards constraints
+     */
+    OnboardingAdvanced = 1
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-types}
+ */
+export declare enum GuildOnboardingPromptType {
+    MultipleChoice = 0,
+    Dropdown = 1
+}
+/**
+ * @see {@link https://discord.com/developers/docs/resources/guild#incidents-data-object}
+ */
+export interface APIIncidentsData {
+    /**
+     * When invites get enabled again
+     */
+    invites_disabled_until: string | null;
+    /**
+     * When direct messages get enabled again
+     */
+    dms_disabled_until: string | null;
+    /**
+     * When the dm spam was detected
+     */
+    dm_spam_detected_at?: string | null;
+    /**
+     * When the raid was detected
+     */
+    raid_detected_at?: string | null;
 }
 //# sourceMappingURL=guild.d.ts.map

@@ -2,14 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StageInstancePrivacyLevel = void 0;
 /**
- * https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level}
  */
 var StageInstancePrivacyLevel;
 (function (StageInstancePrivacyLevel) {
     /**
      * The stage instance is visible publicly, such as on stage discovery
+     *
+     * @deprecated
+     * {@link https://github.com/discord/discord-api-docs/pull/4296 | discord-api-docs#4296}
      */
     StageInstancePrivacyLevel[StageInstancePrivacyLevel["Public"] = 1] = "Public";
     /**

@@ -4,9 +4,7 @@
 import type { Snowflake } from '../../globals';
 import type { APIUser } from './user';
 /**
- * https://discord.com/developers/docs/resources/sticker#sticker-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/sticker#sticker-object}
  */
 export interface APISticker {
     /**
@@ -32,19 +30,20 @@ export interface APISticker {
     /**
      * Previously the sticker asset hash, now an empty string
      *
-     * @deprecated
+     * @deprecated This field is no longer documented by Discord and will be removed in v11
+     * @unstable This field is no longer documented by Discord and will be removed in v11
      */
-    asset: '';
+    asset?: '';
     /**
      * Type of sticker
      *
-     * See https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-types
+     * @see {@link https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-types}
      */
     type: StickerType;
     /**
      * Type of sticker format
      *
-     * See https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types
+     * @see {@link https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types}
      */
     format_type: StickerFormatType;
     /**
@@ -65,40 +64,33 @@ export interface APISticker {
     sort_value?: number;
 }
 /**
- * https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-types
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-types}
  */
 export declare enum StickerType {
     /**
-     * An official sticker in a pack, part of Nitro or in a removed purchasable pack
+     * An official sticker in a pack
      */
     Standard = 1,
     /**
-     * A sticker uploaded to a Boosted guild for the guild's members
+     * A sticker uploaded to a guild for the guild's members
      */
     Guild = 2
 }
 /**
- * https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types}
  */
 export declare enum StickerFormatType {
     PNG = 1,
     APNG = 2,
-    Lottie = 3
+    Lottie = 3,
+    GIF = 4
 }
 /**
- * https://discord.com/developers/docs/resources/sticker#sticker-item-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/sticker#sticker-item-object}
  */
 export type APIStickerItem = Pick<APISticker, 'format_type' | 'id' | 'name'>;
 /**
- * https://discord.com/developers/docs/resources/sticker#sticker-pack-object
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/resources/sticker#sticker-pack-object}
  */
 export interface APIStickerPack {
     /**

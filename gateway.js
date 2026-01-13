@@ -1,11 +1,13 @@
 "use strict";
 /**
- * Types extracted from https://discord.com/developers/docs/topics/gateway
+ * Types extracted from
+ *  - https://discord.com/developers/docs/topics/gateway
+ *  - https://discord.com/developers/docs/topics/gateway-events
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ActivityFlags = exports.ActivityType = exports.ActivityPlatform = exports.PresenceUpdateStatus = void 0;
+exports.ActivityFlags = exports.StatusDisplayType = exports.ActivityType = exports.ActivityPlatform = exports.PresenceUpdateStatus = void 0;
 /**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types}
  */
 var PresenceUpdateStatus;
 (function (PresenceUpdateStatus) {
@@ -19,50 +21,72 @@ var PresenceUpdateStatus;
     PresenceUpdateStatus["Offline"] = "offline";
 })(PresenceUpdateStatus || (exports.PresenceUpdateStatus = PresenceUpdateStatus = {}));
 /**
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @unstable This enum is currently not documented by Discord but has known values which we will try to keep up to date.
+ * Values might be added or removed without a major version bump.
  */
 var ActivityPlatform;
 (function (ActivityPlatform) {
     ActivityPlatform["Desktop"] = "desktop";
-    ActivityPlatform["Samsung"] = "samsung";
     ActivityPlatform["Xbox"] = "xbox";
+    ActivityPlatform["Samsung"] = "samsung";
+    ActivityPlatform["IOS"] = "ios";
+    ActivityPlatform["Android"] = "android";
+    ActivityPlatform["Embedded"] = "embedded";
+    ActivityPlatform["PS4"] = "ps4";
+    ActivityPlatform["PS5"] = "ps5";
 })(ActivityPlatform || (exports.ActivityPlatform = ActivityPlatform = {}));
 /**
- * https://discord.com/developers/docs/topics/gateway#activity-object-activity-types
- *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types}
  */
 var ActivityType;
 (function (ActivityType) {
     /**
-     * Playing {game}
+     * Playing \{game\}
      */
     ActivityType[ActivityType["Playing"] = 0] = "Playing";
     /**
-     * Streaming {details}
+     * Streaming \{details\}
      */
     ActivityType[ActivityType["Streaming"] = 1] = "Streaming";
     /**
-     * Listening to {name}
+     * Listening to \{name\}
      */
     ActivityType[ActivityType["Listening"] = 2] = "Listening";
     /**
-     * Watching {details}
+     * Watching \{details\}
      */
     ActivityType[ActivityType["Watching"] = 3] = "Watching";
     /**
-     * {emoji} {details}
+     * \{emoji\} \{state\}
      */
     ActivityType[ActivityType["Custom"] = 4] = "Custom";
     /**
-     * Competing in {name}
+     * Competing in \{name\}
      */
     ActivityType[ActivityType["Competing"] = 5] = "Competing";
 })(ActivityType || (exports.ActivityType = ActivityType = {}));
 /**
- * https://discord.com/developers/docs/topics/gateway#activity-object-activity-flags
+ * Controls which field is used in the user's status message
  *
- * @deprecated API and gateway v8 are deprecated and the types will not receive further updates, please update to v10.
+ * @see {@link https://discord.com/developers/docs/events/gateway-events#activity-object-status-display-types}
+ */
+var StatusDisplayType;
+(function (StatusDisplayType) {
+    /**
+     * Playing \{name\}
+     */
+    StatusDisplayType[StatusDisplayType["Name"] = 0] = "Name";
+    /**
+     * Playing \{state\}
+     */
+    StatusDisplayType[StatusDisplayType["State"] = 1] = "State";
+    /**
+     * Playing \{details\}
+     */
+    StatusDisplayType[StatusDisplayType["Details"] = 2] = "Details";
+})(StatusDisplayType || (exports.StatusDisplayType = StatusDisplayType = {}));
+/**
+ * @see {@link https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags}
  */
 var ActivityFlags;
 (function (ActivityFlags) {
