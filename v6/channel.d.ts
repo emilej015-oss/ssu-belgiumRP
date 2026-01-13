@@ -1,339 +1,268 @@
-/**
- * Types extracted from https://discord.com/developers/docs/resources/channel
- */
-import type { APIPartialEmoji } from './emoji';
-import type { APIGuildMember } from './guild';
-import type { APIUser } from './user';
-/**
- * Not documented, but partial only includes id, name, and type
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export interface APIPartialChannel {
-    id: string;
-    type: ChannelType;
-    name?: string;
-}
-/**
- * https://discord.com/developers/docs/resources/channel#channel-object-channel-structure
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export interface APIChannel extends APIPartialChannel {
-    guild_id?: string;
-    position?: number;
-    permission_overwrites?: APIOverwrite[];
-    name?: string;
-    topic?: string | null;
-    nsfw?: boolean;
-    last_message_id?: string | null;
-    bitrate?: number;
-    user_limit?: number;
-    rate_limit_per_user?: number;
-    recipients?: APIUser[];
-    icon?: string | null;
-    owner_id?: string;
-    application_id?: string;
-    parent_id?: string | null;
-    last_pin_timestamp?: string | null;
-}
-/**
- * https://discord.com/developers/docs/resources/channel#channel-object-channel-types
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export declare enum ChannelType {
-    GUILD_TEXT = 0,
-    DM = 1,
-    GUILD_VOICE = 2,
-    GROUP_DM = 3,
-    GUILD_CATEGORY = 4,
-    GUILD_NEWS = 5,
-    GUILD_STORE = 6
-}
-/**
- * https://discord.com/developers/docs/resources/channel#message-object-message-structure
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export interface APIMessage {
-    id: string;
-    channel_id: string;
-    guild_id?: string;
-    author: APIUser;
-    member?: APIGuildMember;
-    content: string;
-    timestamp: string;
-    edited_timestamp: string | null;
-    tts: boolean;
-    mention_everyone: boolean;
-    mentions: (APIUser & {
-        member?: Omit<APIGuildMember, 'user'>;
-    })[];
-    mention_roles: string[];
-    mention_channels?: APIChannelMention[];
-    attachments: APIAttachment[];
-    embeds: APIEmbed[];
-    reactions?: APIReaction[];
-    nonce?: number | string;
-    pinned: boolean;
-    webhook_id?: string;
-    type: MessageType;
-    activity?: APIMessageActivity;
-    application?: APIMessageApplication;
-    message_reference?: APIMessageReference;
-    flags?: MessageFlags;
-    referenced_message?: APIMessage | null;
-}
-/**
- * https://discord.com/developers/docs/resources/channel#message-object-message-types
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export declare enum MessageType {
-    DEFAULT = 0,
-    RECIPIENT_ADD = 1,
-    RECIPIENT_REMOVE = 2,
-    CALL = 3,
-    CHANNEL_NAME_CHANGE = 4,
-    CHANNEL_ICON_CHANGE = 5,
-    CHANNEL_PINNED_MESSAGE = 6,
-    GUILD_MEMBER_JOIN = 7,
-    USER_PREMIUM_GUILD_SUBSCRIPTION = 8,
-    USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9,
-    USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10,
-    USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11,
-    CHANNEL_FOLLOW_ADD = 12,
-    GUILD_DISCOVERY_DISQUALIFIED = 14,
-    GUILD_DISCOVERY_REQUALIFIED = 15,
-    GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING = 16,
-    GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING = 17
-}
-/**
- * https://discord.com/developers/docs/resources/channel#message-object-message-activity-structure
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export interface APIMessageActivity {
-    type: MessageActivityType;
-    party_id?: string;
-}
-/**
- * https://discord.com/developers/docs/resources/channel#message-object-message-application-structure
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export interface APIMessageApplication {
-    id: string;
-    cover_image?: string;
-    description: string;
-    icon: string | null;
-    name: string;
-}
-/**
- * https://discord.com/developers/docs/resources/channel#message-object-message-reference-structure
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export interface APIMessageReference {
-    message_id?: string;
-    channel_id: string;
-    guild_id?: string;
-}
-/**
- * https://discord.com/developers/docs/resources/channel#message-object-message-activity-types
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export declare enum MessageActivityType {
-    JOIN = 1,
-    SPECTATE = 2,
-    LISTEN = 3,
-    JOIN_REQUEST = 5
-}
-/**
- * https://discord.com/developers/docs/resources/channel#message-object-message-flags
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export declare enum MessageFlags {
-    CROSSPOSTED = 1,
-    IS_CROSSPOST = 2,
-    SUPPRESS_EMBEDS = 4,
-    SOURCE_MESSAGE_DELETED = 8,
-    URGENT = 16
-}
-/**
- * https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export interface APIReaction {
-    count: number;
-    me: boolean;
-    emoji: APIPartialEmoji;
-}
+import type { APIChannel, APIEmbed, APIFollowedChannel, APIInvite, APIMessage, APIMessageReference, APIOverwrite, APIUser, ChannelType, InviteTargetUserType, MessageFlags, OverwriteType } from '../../payloads/v6/index';
 /**
  * https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIOverwrite {
+export interface APIOverwriteSend {
     id: string;
     type: OverwriteType;
+    allow: number | string;
+    deny: number | string;
+}
+/**
+ * https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export declare enum AllowedMentionsTypes {
+    Everyone = "everyone",
+    Role = "roles",
+    User = "users"
+}
+/**
+ * https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mentions-structure
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export interface APIAllowedMentionsSend {
+    parse?: AllowedMentionsTypes[];
+    roles?: string[];
+    users?: string[];
+}
+/**
+ * https://discord.com/developers/docs/resources/channel#modify-channel
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export interface RESTPatchAPIChannelJSONBody {
+    name?: string | undefined;
+    type?: ChannelType.GUILD_NEWS | ChannelType.GUILD_TEXT | undefined;
+    position?: number | null | undefined;
+    topic?: string | null | undefined;
+    nsfw?: boolean | null | undefined;
+    rate_limit_per_user?: number | null | undefined;
+    user_limit?: number | null | undefined;
+    permission_overwrites?: APIOverwrite[] | null | undefined;
+    parent_id?: string | null | undefined;
+}
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTGetAPIChannelResult = APIChannel;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTPatchAPIChannelResult = APIChannel;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTDeleteAPIChannelResult = APIChannel;
+/**
+ * https://discord.com/developers/docs/resources/channel#get-channel-messages
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export interface RESTGetAPIChannelMessagesQuery {
+    around?: string;
+    before?: string;
+    after?: string;
+    limit?: number;
+}
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTGetAPIChannelMessagesResult = APIMessage[];
+/**
+ * https://discord.com/developers/docs/resources/channel#create-message
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export interface RESTPostAPIChannelMessageJSONBody {
+    content?: string | undefined;
+    nonce?: number | string | undefined;
+    tts?: boolean | undefined;
+    embed?: APIEmbed | undefined;
+    allowed_mentions?: APIAllowedMentionsSend | undefined;
+    message_reference?: APIMessageReference | undefined;
+}
+/**
+ * https://discord.com/developers/docs/resources/channel#create-message
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTPostAPIChannelMessageFormDataBody = {
     /**
-     * @deprecated Use `allow_new` instead
+     * JSON stringified message body
      */
-    allow: number;
-    allow_new: string;
+    payload_json?: string | undefined;
     /**
-     * @deprecated Use `deny_new` instead
+     * The file contents
      */
-    deny: number;
-    deny_new: string;
-}
+    file: unknown;
+} | {
+    content?: string | undefined;
+    nonce?: number | string | undefined;
+    tts?: boolean | undefined;
+    embed?: APIEmbed | undefined;
+    allowed_mentions?: APIAllowedMentionsSend | undefined;
+    message_reference?: APIMessageReference | undefined;
+    /**
+     * The file contents
+     */
+    file: unknown;
+};
 /**
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export declare enum OverwriteType {
-    Member = "member",
-    Role = "role"
-}
-/**
- * https://discord.com/developers/docs/resources/channel#embed-object-embed-structure
+ * https://discord.com/developers/docs/resources/channel#edit-message
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIEmbed {
-    title?: string;
-    type?: EmbedType;
-    description?: string;
-    url?: string;
-    timestamp?: string;
-    color?: number;
-    footer?: APIEmbedFooter;
-    image?: APIEmbedImage;
-    thumbnail?: APIEmbedThumbnail;
-    video?: APIEmbedVideo;
-    provider?: APIEmbedProvider;
-    author?: APIEmbedAuthor;
-    fields?: APIEmbedField[];
+export interface RESTPatchAPIChannelMessageJSONBody {
+    content?: string | null | undefined;
+    embed?: APIEmbed | null | undefined;
+    allowed_mentions?: APIAllowedMentionsSend | null | undefined;
+    flags?: MessageFlags | null | undefined;
 }
 /**
- * https://discord.com/developers/docs/resources/channel#embed-object-embed-types
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTGetAPIChannelMessageResult = APIMessage;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTPostAPIChannelMessageResult = APIMessage;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTPatchAPIChannelMessageResult = APIMessage;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTDeleteAPIChannelMessageResult = never;
+/**
+ * https://discord.com/developers/docs/resources/channel#get-reactions
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export declare enum EmbedType {
-    Rich = "rich",
-    Image = "image",
-    Video = "video",
-    GifV = "gifv",
-    Article = "article",
-    Link = "link"
+export interface RESTGetAPIChannelMessageReactionsQuery {
+    before?: string;
+    after?: string;
+    limit?: number;
 }
 /**
- * https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTGetAPIChannelMessageReactionsResult = APIUser[];
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTPutAPIChannelMessageReactionResult = never;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTDeleteAPIChannelMessageReactionResult = never;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTDeleteAPIChannelAllMessageReactionsResult = never;
+/**
+ * https://discord.com/developers/docs/resources/channel#bulk-delete-messages
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIEmbedThumbnail {
-    url?: string;
-    proxy_url?: string;
-    height?: number;
-    width?: number;
+export interface RESTPostAPIChannelMessagesBulkDeleteJSONBody {
+    messages: string[];
 }
 /**
- * https://discord.com/developers/docs/resources/channel#embed-object-embed-video-structure
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTPostAPIChannelMessagesBulkDeleteResult = never;
+/**
+ * https://discord.com/developers/docs/resources/channel#edit-channel-permissions
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIEmbedVideo {
-    url?: string;
-    height?: number;
-    width?: number;
+export interface RESTPutAPIChannelPermissionsJSONBody {
+    allow: number | string;
+    deny: number | string;
+    type: OverwriteType;
 }
 /**
- * https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTPutAPIChannelPermissionsResult = never;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTDeleteAPIChannelPermissionsResult = never;
+/**
+ * https://discord.com/developers/docs/resources/channel#get-channel-invites
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIEmbedImage {
-    url?: string;
-    proxy_url?: string;
-    height?: number;
-    width?: number;
+export type RESTGetAPIChannelInvitesResult = APIInvite[];
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export interface RESTPostAPIChannelInviteJSONBody {
+    max_age?: number | undefined;
+    max_uses?: number | undefined;
+    temporary?: boolean | undefined;
+    unique?: boolean | undefined;
+    target_user_id?: string | undefined;
+    target_user_type?: InviteTargetUserType | undefined;
 }
 /**
- * https://discord.com/developers/docs/resources/channel#embed-object-embed-provider-structure
+ * https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIEmbedProvider {
-    name?: string;
-    url?: string;
-}
+export type RESTPostAPIChannelTypingResult = never;
 /**
- * https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure
+ * https://discord.com/developers/docs/resources/channel#get-pinned-messages
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIEmbedAuthor {
-    name?: string;
-    url?: string;
-    icon_url?: string;
-    proxy_icon_url?: string;
-}
+export type RESTGetAPIChannelPinsResult = APIMessage[];
 /**
- * https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
+ * https://discord.com/developers/docs/resources/channel#add-pinned-channel-message
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIEmbedFooter {
-    text: string;
-    icon_url?: string;
-    proxy_icon_url?: string;
-}
+export type RESTPutAPIChannelPinResult = never;
 /**
- * https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTDeleteAPIChannelPinResult = never;
+/**
+ * https://discord.com/developers/docs/resources/channel#group-dm-add-recipient
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIEmbedField {
-    name: string;
-    value: string;
-    inline?: boolean;
+export interface RESTPutAPIChannelRecipientJSONBody {
+    access_token: string;
+    nick?: string | undefined;
 }
 /**
- * https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIAttachment {
-    id: string;
-    filename: string;
-    size: number;
-    url: string;
-    proxy_url: string;
-    height: number | null;
-    width: number | null;
+export type RESTPutAPIChannelRecipientResult = unknown;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTDeleteAPIChannelRecipientResult = unknown;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTPostAPIChannelMessageCrosspostResult = APIMessage;
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export interface RESTPostAPIChannelFollowersJSONBody {
+    webhook_channel_id: string;
 }
 /**
- * https://discord.com/developers/docs/resources/channel#channel-mention-object-channel-mention-structure
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIChannelMention {
-    id: string;
-    guild_id: string;
-    type: ChannelType;
-    name: string;
-}
-/**
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export interface APIFollowedChannel {
-    channel_id: string;
-    webhook_id: string;
-}
+export type RESTPostAPIChannelFollowersResult = APIFollowedChannel;
 //# sourceMappingURL=channel.d.ts.map

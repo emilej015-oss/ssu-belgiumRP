@@ -1,79 +1,80 @@
+import type { APIChannel, APIConnection, APIUser, GuildFeature } from '../../payloads/v6/index';
 /**
- * Types extracted from https://discord.com/developers/docs/resources/user
- */
-import type { APIGuildIntegration } from './guild';
-/**
- * https://discord.com/developers/docs/resources/user#user-object
+ * https://discord.com/developers/docs/resources/user#get-current-user
  *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export interface APIUser {
-    id: string;
-    username: string;
-    discriminator: string;
-    avatar: string | null;
-    bot?: boolean;
-    system?: boolean;
-    mfa_enabled?: boolean;
-    locale?: string;
-    verified?: boolean;
-    email?: string | null;
-    flags?: UserFlags;
-    premium_type?: UserPremiumType;
-    public_flags?: UserFlags;
+export type RESTGetAPICurrentUserResult = APIUser;
+/**
+ * https://discord.com/developers/docs/resources/user#get-user
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTGetAPIUserResult = APIUser;
+/**
+ * https://discord.com/developers/docs/resources/user#modify-current-user
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export interface RESTPatchAPICurrentUserJSONBody {
+    username?: string | undefined;
+    avatar?: string | null | undefined;
 }
 /**
- * https://discord.com/developers/docs/resources/user#user-object-user-flags
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export declare enum UserFlags {
-    None = 0,
-    DiscordEmployee = 1,
-    PartneredServerOwner = 2,
-    DiscordHypeSquadEvents = 4,
-    BugHunterLevel1 = 8,
-    HypeSquadHouseBravery = 64,
-    HypeSquadHouseBrilliance = 128,
-    HypeSquadHouseBalance = 256,
-    EarlySupporter = 512,
-    TeamUser = 1024,
-    System = 4096,
-    BugHunterLevel2 = 16384,
-    VerifiedBot = 65536,
-    EarlyVerifiedBotDeveloper = 131072
+export type RESTPatchAPICurrentUserResult = APIUser;
+/**
+ * https://discord.com/developers/docs/resources/user#get-current-user-guilds
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export interface RESTGetAPICurrentUserGuildsQuery {
+    before?: string;
+    after?: string;
+    limit?: number;
 }
 /**
- * https://discord.com/developers/docs/resources/user#user-object-premium-types
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export declare enum UserPremiumType {
-    None = 0,
-    NitroClassic = 1,
-    Nitro = 2
-}
-/**
- * https://discord.com/developers/docs/resources/user#connection-object
- *
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
- */
-export interface APIConnection {
+export interface RESTAPIPartialCurrentUserGuild {
     id: string;
     name: string;
-    type: string;
-    revoked?: boolean;
-    integrations?: Partial<APIGuildIntegration>[];
-    verified: boolean;
-    friend_sync: boolean;
-    show_activity: boolean;
-    visibility: ConnectionVisibility;
+    icon: string | null;
+    owner: boolean;
+    features: GuildFeature[];
+    /**
+     * @deprecated Use `permissions_new` instead
+     */
+    permissions: number;
+    permissions_new: string;
 }
 /**
- * @deprecated API and Gateway v6 are deprecated and the types will not receive further updates, please update to v8.
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
  */
-export declare enum ConnectionVisibility {
-    None = 0,
-    Everyone = 1
+export type RESTGetAPICurrentUserGuildsResult = RESTAPIPartialCurrentUserGuild[];
+/**
+ * https://discord.com/developers/docs/resources/user#leave-guild
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTDeleteAPICurrentUserGuildResult = never;
+/**
+ * https://discord.com/developers/docs/resources/user#create-dm
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export interface RESTPostAPICurrentUserCreateDMChannelJSONBody {
+    recipient_id: string;
 }
+/**
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTPostAPICurrentUserCreateDMChannelResult = APIChannel;
+/**
+ * https://discord.com/developers/docs/resources/user#get-user-connections
+ *
+ * @deprecated API v6 is deprecated and the types will not receive further updates, please update to v8.
+ */
+export type RESTGetAPICurrentUserConnectionsResult = APIConnection[];
 //# sourceMappingURL=user.d.ts.map
