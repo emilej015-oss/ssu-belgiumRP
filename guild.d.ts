@@ -388,7 +388,15 @@ export declare enum GuildSystemChannelFlags {
     /**
      * Hide member join sticker reply buttons
      */
-    SuppressJoinNotificationReplies = 8
+    SuppressJoinNotificationReplies = 8,
+    /**
+     * Suppress role subscription purchase and renewal notifications
+     */
+    SuppressRoleSubscriptionPurchaseNotifications = 16,
+    /**
+     * Hide role subscription sticker reply buttons
+     */
+    SuppressRoleSubscriptionPurchaseNotificationReplies = 32
 }
 /**
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-features}

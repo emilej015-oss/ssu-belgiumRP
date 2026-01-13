@@ -102,6 +102,14 @@ var GuildSystemChannelFlags;
      * Hide member join sticker reply buttons
      */
     GuildSystemChannelFlags[GuildSystemChannelFlags["SuppressJoinNotificationReplies"] = 8] = "SuppressJoinNotificationReplies";
+    /**
+     * Suppress role subscription purchase and renewal notifications
+     */
+    GuildSystemChannelFlags[GuildSystemChannelFlags["SuppressRoleSubscriptionPurchaseNotifications"] = 16] = "SuppressRoleSubscriptionPurchaseNotifications";
+    /**
+     * Hide role subscription sticker reply buttons
+     */
+    GuildSystemChannelFlags[GuildSystemChannelFlags["SuppressRoleSubscriptionPurchaseNotificationReplies"] = 32] = "SuppressRoleSubscriptionPurchaseNotificationReplies";
 })(GuildSystemChannelFlags || (exports.GuildSystemChannelFlags = GuildSystemChannelFlags = {}));
 /**
  * @see {@link https://discord.com/developers/docs/resources/guild#guild-object-guild-features}

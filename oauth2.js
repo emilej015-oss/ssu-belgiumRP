@@ -73,6 +73,18 @@ var OAuth2Scopes;
      */
     OAuth2Scopes["RPC"] = "rpc";
     /**
+     * For local rpc server access, this allows you to update a user's activity - requires Discord approval
+     */
+    OAuth2Scopes["RPCActivitiesWrite"] = "rpc.activities.write";
+    /**
+     * For local rpc server access, this allows you to read a user's voice settings and listen for voice events - requires Discord approval
+     */
+    OAuth2Scopes["RPCVoiceRead"] = "rpc.voice.read";
+    /**
+     * For local rpc server access, this allows you to update a user's voice settings - requires Discord approval
+     */
+    OAuth2Scopes["RPCVoiceWrite"] = "rpc.voice.write";
+    /**
      * For local rpc server api access, this allows you to receive notifications pushed out to the user - requires Discord approval
      */
     OAuth2Scopes["RPCNotificationsRead"] = "rpc.notifications.read";

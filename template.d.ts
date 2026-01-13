@@ -3,10 +3,10 @@
  */
 import type { Snowflake } from '../../globals';
 import type { Locale } from '../../rest/common';
-import type { RESTPostAPIGuildsJSONBody } from '../../rest/v9/index';
+import type { RESTPostAPIGuildsJSONBody } from '../../rest/v10/index';
 import type { APIUser } from './user';
 /**
- * @see {@link https://discord.com/developers/docs/resources/guild-template#template-object}
+ * @see {@link https://discord.com/developers/docs/resources/guild-template#guild-template-object}
  */
 export interface APITemplate {
     /**

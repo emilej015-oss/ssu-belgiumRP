@@ -8,6 +8,9 @@ import type { APIGuildMember } from './guild';
  * @deprecated This is deprecated, use {@link APIVoiceState}
  */
 export type GatewayVoiceState = APIVoiceState;
+/**
+ * @see {@link https://discord.com/developers/docs/resources/voice#voice-state-object}
+ */
 export interface APIBaseVoiceState {
     /**
      * The channel id this user is connected to

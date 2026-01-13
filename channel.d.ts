@@ -113,7 +113,7 @@ export interface APIGuildChannel<T extends GuildChannelType = GuildChannelType> 
     nsfw?: boolean;
 }
 export type GuildTextChannelType = Exclude<TextChannelType, ChannelType.DM | ChannelType.GroupDM>;
-export interface APIGuildTextChannel<T extends ChannelType.GuildForum | ChannelType.GuildMedia | GuildTextChannelType> extends APITextBasedChannel<T>, APISortableChannel, APIGuildChannel<T>, APIPinChannel<T> {
+export interface APIGuildTextChannel<T extends ChannelType.GuildForum | ChannelType.GuildMedia | GuildTextChannelType> extends APITextBasedChannel<T>, APIGuildChannel<T>, APISortableChannel, APIPinChannel<T> {
     /**
      * Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity
      */
@@ -133,7 +133,7 @@ export type APINewsChannel = APIGuildTextChannel<ChannelType.GuildAnnouncement>;
 export interface APIGuildCategoryChannel extends APIGuildChannel<ChannelType.GuildCategory>, APISortableChannel {
     parent_id?: null;
 }
-export interface APIVoiceChannelBase<T extends GuildChannelType = GuildChannelType> extends APIGuildChannel<T>, APISortableChannel, APITextBasedChannel<T>, APISlowmodeChannel<T> {
+export interface APIVoiceChannelBase<T extends GuildChannelType> extends APIGuildChannel<T>, APISortableChannel, APITextBasedChannel<T>, APISlowmodeChannel<T> {
     /**
      * The bitrate (in bits) of the voice or stage channel
      */
@@ -606,10 +606,6 @@ export interface APIThreadList {
      * The members for the client user in each of the fetched threads
      */
     members: APIThreadMember[];
-    /**
-     * Whether there are potentially additional threads
-     */
-    has_more?: boolean;
 }
 /**
  * @see {@link https://discord.com/developers/docs/resources/channel#channel-object-channel-flags}

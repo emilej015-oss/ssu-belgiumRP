@@ -130,6 +130,8 @@ export interface GatewayPresenceClientStatus {
 export interface GatewayActivity {
     /**
      * The activity's id
+     *
+     * @unstable
      */
     id: string;
     /**
@@ -154,9 +156,16 @@ export interface GatewayActivity {
      * Unix timestamps for start and/or end of the game
      */
     timestamps?: GatewayActivityTimestamps;
+    /**
+     * The Spotify song id
+     *
+     * @unstable
+     */
     sync_id?: string;
     /**
-     * {@link ActivityPlatform}
+     * The platform this activity is being done on
+     *
+     * @unstable You can use {@link ActivityPlatform} as a stepping stone, but this might be inaccurate
      */
     platform?: string;
     /**
@@ -191,6 +200,9 @@ export interface GatewayActivity {
      * @see {@link https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-emoji}
      */
     emoji?: GatewayActivityEmoji;
+    /**
+     * @unstable
+     */
     session_id?: string;
     /**
      * Information for the current party of the player
